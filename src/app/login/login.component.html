@@ -1,0 +1,56 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title class="card-header">Bem-vindo(a)!</mat-card-title>
+    <mat-card-content class="card-content" [formGroup]="userForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="Email"
+          formControlName="email"
+          name="email"
+          required
+        />
+        <mat-error *ngIf="email.invalid && email.hasError('email')">
+          Email inválido!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          placeholder="Senha"
+          formControlName="password"
+          type="password"
+          name="password"
+          required
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error>
+          <div *ngIf="password.invalid">
+            <div *ngIf="password.errors?.['required']">
+              Digite uma senha
+            </div>
+            <div *ngIf="password.errors?.['minlength']">
+              Uma senha tem no mínimo 6 caracteres
+            </div>
+          </div>
+        </mat-error>
+      </mat-form-field>
+      <p>
+        Não tem conta?
+        <a [routerLink]="['/auth/register']">Cadastre-se!</a>
+      </p>
+      <button mat-raised-button (click)="login()" color="primary">Login</button>
+    </mat-card-content>
+  </mat-card>
+</div>

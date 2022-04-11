@@ -1,0 +1,18 @@
+<header>
+  <mat-toolbar color="primary">
+    <a mat-icon-button routerLink="/">
+      <mat-icon>home</mat-icon>Home
+    </a>
+    <span class="example-spacer"></span>
+    <a mat-flat-button routerLink="/auth/login" *ngIf="!user">Entrar</a>
+    <a mat-flat-button routerLink="/auth/register" *ngIf="!user">Cadastrar-se</a>
+    <div>
+      <a class="links side" *ngIf="user" [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>{{ user.name }}
+      </a>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">logout</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+</header>
