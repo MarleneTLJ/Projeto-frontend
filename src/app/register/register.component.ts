@@ -16,7 +16,9 @@ import { AuthService } from '../shared/services';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  hide = true;
+  error: string | null = null;
+  hide1 = true;
+  hide2 = true;
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -29,10 +31,14 @@ export class RegisterComponent {
       : null;
   }
 
+  // Form de validações para evitar que o usuário envie dados inválidos
   userForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
     repeatPassword: new FormControl('', [
       Validators.required,
       this.passwordsMatchValidator,
@@ -56,6 +62,7 @@ export class RegisterComponent {
   }
 
   register(): void {
+    // Se estiver incorreto os dados que o usuário inseriu, ele retorna nada
     if (this.userForm.invalid) {
       return;
     }
@@ -63,10 +70,15 @@ export class RegisterComponent {
     const { name, email, password, repeatPassword } =
       this.userForm.getRawValue();
 
-    this.authService
-      .register(name, email, password, repeatPassword)
-      .subscribe(() => {
+    this.authService.register(name, email, password, repeatPassword).subscribe({
+      // Se estiver tudo correto, ele leva o usuário até a home page
+      next: () => {
         this.router.navigate(['']);
-      });
+      },
+      // Pega o erro para jogar na tela
+      error: () => {
+        this.error = 'Este e-mail já existe!';
+      },
+    });
   }
 }

@@ -1,18 +1,24 @@
-<header>
-  <mat-toolbar color="primary">
-    <a mat-icon-button routerLink="/">
-      <mat-icon>home</mat-icon>Home
-    </a>
-    <span class="example-spacer"></span>
-    <a mat-flat-button routerLink="/auth/login" *ngIf="!user">Entrar</a>
-    <a mat-flat-button routerLink="/auth/register" *ngIf="!user">Cadastrar-se</a>
-    <div>
-      <a class="links side" *ngIf="user" [matMenuTriggerFor]="menu">
-        <mat-icon>account_circle</mat-icon>{{ user.name }}
-      </a>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="logout()">logout</button>
-      </mat-menu>
-    </div>
-  </mat-toolbar>
+<header class="header">
+  <a mat-icon-button routerLink="/" class="logo">
+    Home
+  </a>
+  <!-- INÍCIO: Botões de login e cadastro -->
+  <!-- Só exibe se o usuário não estiver logado -->
+  <div class="botoes">
+    <a class="botoes--spacing" mat-flat-button routerLink="/auth/login" *ngIf="!user">Entrar</a>
+    <a class="botoes--spacing" mat-flat-button routerLink="/auth/register" *ngIf="!user">Cadastrar-se</a>
+  </div>
+  <!-- FIM: Botões de login e cadastro -->
+
+  <!-- INÍCIO: Menu do usuário -->
+  <!-- Só exibe se o usuário estiver logado -->
+  <div class="userMenu" *ngIf="user">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon> {{ user.name }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Sair</button>
+    </mat-menu>
+  </div>
+  <!-- FIM: Menu do usuário -->
 </header>
