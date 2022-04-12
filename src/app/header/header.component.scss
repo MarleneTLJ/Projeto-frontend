@@ -1,32 +1,41 @@
-header {
-  width: 100%;
-  .logo {
-    color: white;
-    width: 50px;
-    background-size: contain;
-    background-repeat: no-repeat;
+.header {
+  height: 6rem;
+  color: white;
+  background-color: #3f51b5;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media only screen and (max-width: 37.5em) {
+      flex-wrap: wrap;
+      align-content: space-around;
+      height: 9rem;
+      font-size: 1.4rem;
   }
-  .example-spacer {
-    flex: 1 1 auto;
+}
+
+.logo {
+  margin-left: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.botoes {
+  margin-right: 1rem;
+  display: flex;
+  align-items: flex-end;
+
+  &--spacing {
+    margin: .3rem;
   }
-  .links {
-    color: white;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 15px;
-    font-weight: initial;
-    letter-spacing: -1px;
-    line-height: 1;
-    text-align: center;
-    padding: 15px;
-    &.side {
-      padding: 0 14px;
-    }
-  }
-  .mat-icon {
-    vertical-align: middle;
-    margin: 0 5px;
-  }
-  a {
-    cursor: pointer;
-  }
+}
+
+.userMenu {
+  margin-right: 1rem;
+  display: flex;
+  align-items: flex-end;
 }

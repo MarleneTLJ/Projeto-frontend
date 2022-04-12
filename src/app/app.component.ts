@@ -13,9 +13,9 @@ export class AppComponent {
   title = 'angular-auth';
 
   user$: Observable<User | null> = merge(
-    // Init on startup
+    // Inicia na inicialização
     this.authService.me(),
-    // Update after login/register/logout
+    // Atualiza após o login/cadastro/sair
     this.authService.getUser()
   );
 

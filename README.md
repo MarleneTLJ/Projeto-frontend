@@ -1,27 +1,23 @@
-# ProjetoRemaster
+# Projeto MEAN - FrontEnd
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
+Este projeto utiliza o Angular CLI versão 13.3.1, feito para se utilizar com o MEAN stack (MongoDB, Express, Angular e Node.js).<br>
+É utilizado o [Angular Material](https://material.angular.io/) e SCSS como escolha de design.
 
-## Development server
+## Pré-requisitos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Node.js (de preferência a versão LTS) - [Página de download](https://nodejs.org/en/download/)
+- [Angular CLI](https://angular.io/cli) - Simplesmente execute o comando ```npm install -g @angular/cli``` no terminal. Certifique que o Node.js esteja instalado!
 
-## Code scaffolding
+## Instalação e execução
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Antes de executar o framework, é necessário instalar as dependências com o comando ```npm install``` no terminal (certifique que esteja na pasta do projeto).<br>
+Após a instalação, execute o comando ```ng serve``` e abra a aplicação no seu navegador:
+```
+http://localhost:4200/
+```
 
-## Build
+Caso queira que abra automaticamente no seu navegador, utilize com a tag ```--open```:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+ng serve --open
+```

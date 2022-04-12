@@ -1,8 +1,13 @@
 <div class="container">
   <mat-card>
     <mat-card-title class="card-header">Bem-vindo(a)!</mat-card-title>
+    <!-- INÍCIO: Form de cadastro -->
     <form [formGroup]="userForm">
       <mat-card-content class="card-content">
+        <div class="alert alert-danger" *ngIf="error">
+          <p>{{ error }}</p>
+        </div>
+        <!-- INÍCIO: Nome -->
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
           <input
@@ -24,6 +29,8 @@
             </div>
           </mat-error>
         </mat-form-field>
+        <!-- FIM: Nome -->
+        <!-- INÍCIO: Email -->
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input
@@ -37,26 +44,22 @@
             Email inválido!
           </mat-error>
         </mat-form-field>
+        <!-- FIM: Email -->
+        <!-- INÍCIO: Senha -->
         <mat-form-field appearance="outline">
           <mat-label>Senha</mat-label>
           <input
             matInput
-            [type]="hide ? 'password' : 'text'"
+            [type]="hide1 ? 'password' : 'text'"
             formControlName="password"
             placeholder="Senha"
             type="password"
             name="password"
             required
           />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide"
-          >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-          </button>
+          <a mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+            <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </a>
           <mat-error>
             <div *ngIf="password.invalid">
               <div *ngIf="password.errors?.['required']">
@@ -68,16 +71,22 @@
             </div>
           </mat-error>
         </mat-form-field>
+        <!-- FIM: Senha -->
+        <!-- INÍCIO: Confirmação da senha -->
         <mat-form-field appearance="outline">
           <mat-label>Confirme a senha</mat-label>
           <input
             matInput
+            [type]="hide2 ? 'password' : 'text'"
             placeholder="Confirme a senha"
             formControlName="repeatPassword"
             type="password"
             name="repeatPassword"
             required
           />
+          <a mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </a>
           <mat-error
             *ngIf="
               repeatPassword.invalid && repeatPassword.hasError('passwordMatch')
@@ -85,6 +94,7 @@
             >Senha não é compatível!</mat-error
           >
         </mat-form-field>
+        <!-- FIM: Confirmação da senha -->
         <p>
           Já possui uma conta?
           <a [routerLink]="['/auth/login']">Faça o login.</a>
@@ -94,5 +104,6 @@
         </button>
       </mat-card-content>
     </form>
+    <!-- FIM: Form de cadastro -->
   </mat-card>
 </div>

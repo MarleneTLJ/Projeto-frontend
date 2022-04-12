@@ -19,6 +19,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
 
+  // Função do usuário fazer login
   login(email: string, password: string): Observable<User> {
     return this.http
       .post<AuthResponse>('http://localhost:3000/api/auth/login', { email, password })
@@ -31,6 +32,7 @@ export class AuthService {
       );
   }
 
+  // Função do usuário se cadastrar
   register(
     name: string,
     email: string,

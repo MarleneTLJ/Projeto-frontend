@@ -15,6 +15,7 @@ export class HeaderComponent {
 
   constructor(private router: Router, private authService: AuthService) {}
 
+  // Encerra a sessão do usuário
   logout(): void {
     this.authService.signOut();
     this.router.navigateByUrl('/auth/login');
