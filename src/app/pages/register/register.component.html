@@ -13,7 +13,8 @@
           <input
             matInput
             minlength="3"
-            placeholder="name"
+            maxlength="50"
+            placeholder="Nome"
             formControlName="name"
             name="name"
             required
@@ -21,15 +22,45 @@
           <mat-error>
             <div *ngIf="name.invalid">
               <div *ngIf="name.errors?.['required']">
-                Digite um nome
+                Nome é obrigatório
               </div>
               <div *ngIf="name.errors?.['minlength']">
-                Nome deve ter no mínimo 3 caracteres!
+                Nome deve ter no mínimo 3 caracteres
+              </div>
+              <div *ngIf="name.errors?.['maxlength']">
+                Nome deve ter no máximo 50 caracteres
               </div>
             </div>
           </mat-error>
         </mat-form-field>
         <!-- FIM: Nome -->
+        <!-- INÍCIO: Sobrenome -->
+        <mat-form-field appearance="outline">
+          <mat-label>Sobrenome</mat-label>
+          <input
+            matInput
+            minlength="3"
+            maxlength="255"
+            placeholder="Sobrenome"
+            formControlName="surname"
+            name="surname"
+            required
+          />
+          <mat-error>
+            <div *ngIf="surname.invalid">
+              <div *ngIf="surname.errors?.['required']">
+                Sobrenome é obrigatório
+              </div>
+              <div *ngIf="surname.errors?.['minlength']">
+                Sobrenome deve ter no mínimo 3 caracteres
+              </div>
+              <div *ngIf="surname.errors?.['maxlength']">
+                Sobrenome deve ter no máximo 255 caracteres
+              </div>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <!-- FIM: Sobrenome -->
         <!-- INÍCIO: Email -->
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
@@ -57,14 +88,18 @@
             name="password"
             required
           />
-          <a mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
-            <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <a
+            mat-icon-button
+            matSuffix
+            (click)="hide1 = !hide1"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide1"
+          >
+            <mat-icon>{{ hide1 ? "visibility_off" : "visibility" }}</mat-icon>
           </a>
           <mat-error>
             <div *ngIf="password.invalid">
-              <div *ngIf="password.errors?.['required']">
-                Digite uma senha
-              </div>
+              <div *ngIf="password.errors?.['required']">Digite uma senha</div>
               <div *ngIf="password.errors?.['minlength']">
                 Senha deve ter no mínimo 6 caracteres!
               </div>
@@ -84,8 +119,14 @@
             name="repeatPassword"
             required
           />
-          <a mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
-            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <a
+            mat-icon-button
+            matSuffix
+            (click)="hide2 = !hide2"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide2"
+          >
+            <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
           </a>
           <mat-error
             *ngIf="
@@ -95,10 +136,6 @@
           >
         </mat-form-field>
         <!-- FIM: Confirmação da senha -->
-        <p>
-          Já possui uma conta?
-          <a [routerLink]="['/auth/login']">Faça o login.</a>
-        </p>
         <button mat-raised-button (click)="register()" color="primary">
           Cadastrar
         </button>

@@ -1,0 +1,164 @@
+.apresentacao {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  clip-path: polygon(0 0, 100% 0%, 100% 90%, 0% 100%);
+  background-color: #3f51b5;
+  color: white;
+  backface-visibility: hidden;
+
+  @media only screen and (max-width: 68.75em) {
+    height: 60vh;
+    flex-direction: column;
+  }
+
+  @media only screen and (max-width: 56.25em) {
+    height: 30vh;
+    flex-direction: column;
+  }
+
+  @media only screen and (max-width: 37.5em) {
+    height: 40vh;
+    flex-direction: column;
+  }
+
+  &__titulo-primario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10rem;
+
+    @media only screen and (max-width: 37.5em) {
+      margin-top: 9rem;
+    }
+
+    &--nome {
+      font-size: 5rem; // 1rem = 10px
+      font-weight: 700;
+      letter-spacing: 0.3rem;
+      animation: animacaoEsquerda 1s ease-out 0.5s;
+      animation-fill-mode: backwards;
+      margin-bottom: 2rem;
+      @media only screen and (max-width: 56.25em) {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+      }
+
+      @media only screen and (max-width: 37.5em) {
+        font-size: 3.5rem;
+        margin-bottom: 1.2rem;
+      }
+    }
+
+    &--lytex {
+      font-size: 5rem;
+      font-weight: 700;
+      letter-spacing: 0.3rem;
+      animation: animacaoDireita 1s ease-out 0.5s;
+      animation-fill-mode: backwards;
+      margin-top: 2.5rem;
+
+      @media only screen and (max-width: 56.25em) {
+        font-size: 4rem;
+        letter-spacing: 0.8rem;
+        margin-top: 1.5rem;
+      }
+
+      @media only screen and (max-width: 37.5em) {
+        font-size: 3.5rem;
+        letter-spacing: 0.6rem;
+        margin-top: 1.7rem;
+      }
+    }
+
+    &--sub {
+      font-size: 2.5rem;
+      font-weight: 500;
+      margin-top: 4rem;
+
+      animation: animacaoOpacidade 0.8s ease-in 0.75s;
+      animation-fill-mode: backwards;
+
+      @media only screen and (max-width: 56.25em) {
+        font-size: 1.7rem;
+        margin-top: 3rem;
+      }
+
+      @media only screen and (max-width: 37.5em) {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+      }
+    }
+  }
+}
+
+hr.linha {
+  border: 0.1rem solid white;
+  width: 37rem;
+
+  @media only screen and (max-width: 56.25em) {
+    width: 35rem;
+  }
+
+  @media only screen and (max-width: 37.5em) {
+    width: 30rem;
+  }
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+
+  &__titulo {
+    font-size: 2.4rem;
+    font-weight: 500;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    text-align: center;
+
+    @media only screen and (max-width: 56.25em) {
+      font-size: 1.7rem;
+    }
+
+    @media only screen and (max-width: 37.5em) {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+
+  @media only screen and (max-width: 56.25em) {
+    flex-direction: column;
+  }
+
+  @media only screen and (max-width: 37.5em) {
+    flex-direction: column;
+  }
+}
+
+mat-card {
+  max-width: 50rem;
+  margin: 1rem;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+// .page1 {
+//   height: 100vh;
+//   background-color: #ccc;
+// }
+// .page2 {
+//   height: 100vh;
+//   background-color: #fff;
+// }

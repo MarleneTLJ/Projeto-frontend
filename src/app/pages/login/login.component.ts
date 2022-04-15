@@ -7,7 +7,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 
-import { AuthService } from '../shared/services';
+import { AuthService } from '../../shared/services';
 
 @Component({
   selector: 'app-login',

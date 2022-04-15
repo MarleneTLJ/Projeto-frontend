@@ -34,8 +34,14 @@
             name="password"
             required
           />
-          <a mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <a
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </a>
           <mat-error>
             <div *ngIf="password.invalid">
@@ -47,10 +53,6 @@
           </mat-error>
         </mat-form-field>
         <!-- FIM: Senha -->
-        <p>
-          Não tem conta?
-          <a [routerLink]="['/auth/register']">Cadastre-se!</a>
-        </p>
         <button mat-raised-button (click)="login()" color="primary">
           Login
         </button>

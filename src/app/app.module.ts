@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SharedModule } from './shared/shared.module';
@@ -9,13 +9,15 @@ import { AuthHeaderInterceptor } from './interceptors/header.interceptor';
 import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { AuthService } from './shared/services';
-
-export function appInitializerFactory(authService: AuthService) {
-  return () => authService.checkTheUserOnTheFirstLoad();
-}
+import { DialogCompra } from './dialogs/dialog-compra/dialog-compra.component';
+import { HeaderComponent } from './pages/header/header.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import {
+  DialogInfoSucesso,
+  DialogInfoFalha,
+} from './dialogs/dialog-info/dialog-info.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,16 @@ export function appInitializerFactory(authService: AuthService) {
     SharedModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, HeaderComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    DialogCompra,
+    DialogInfoSucesso,
+    DialogInfoFalha,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -35,12 +46,6 @@ export function appInitializerFactory(authService: AuthService) {
       provide: HTTP_INTERCEPTORS,
       useClass: CatchErrorInterceptor,
       multi: true,
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializerFactory,
-      multi: true,
-      deps: [AuthService],
     },
   ],
   bootstrap: [AppComponent],

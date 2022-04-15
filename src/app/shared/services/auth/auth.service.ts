@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, BehaviorSubject, firstValueFrom, of } from 'rxjs';
-import { tap, pluck, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap, pluck } from 'rxjs/operators';
 
 import { User } from '../../interfaces/';
 
@@ -22,7 +22,10 @@ export class AuthService {
   // Função do usuário fazer login
   login(email: string, password: string): Observable<User> {
     return this.http
-      .post<AuthResponse>('http://localhost:3000/api/auth/login', { email, password })
+      .post<AuthResponse>('http://localhost:3000/api/auth/login', {
+        email,
+        password,
+      })
       .pipe(
         tap(({ token, user }) => {
           this.setUser(user);
@@ -35,6 +38,7 @@ export class AuthService {
   // Função do usuário se cadastrar
   register(
     name: string,
+    surname: string,
     email: string,
     password: string,
     repeatPassword: string
@@ -42,15 +46,18 @@ export class AuthService {
     return this.http
       .post<AuthResponse>('http://localhost:3000/api/auth/register', {
         name,
+        surname,
         email,
         password,
-        repeatPassword
+        repeatPassword,
       })
       .pipe(
-        tap(({ token, user }) => {
-          this.setUser(user);
-          this.tokenStorage.saveToken(token);
-        }),
+        // Na atual situação de registrar um usuário, não é necessário criar um token para ele
+
+        // tap(({ token, user }) => {
+        //   this.setUser(user);
+        //   this.tokenStorage.saveToken(token);
+        // }),
         pluck('user')
       );
   }
@@ -63,14 +70,6 @@ export class AuthService {
     return this.user$.asObservable();
   }
 
-  me(): Observable<User | null> {
-    return this.http.get<AuthResponse>('http://localhost:3000/api/auth/register').pipe(
-      tap(({ user }) => this.setUser(user)),
-      pluck('user'),
-      catchError(() => of(null))
-    );
-  }
-
   signOut(): void {
     this.tokenStorage.signOut();
     this.setUser(null);
@@ -79,13 +78,5 @@ export class AuthService {
   getAuthorizationHeaders() {
     const token: string | null = this.tokenStorage.getToken() || '';
     return { Authorization: `Bearer ${token}` };
-  }
-
-  /**
-   * Vamos tentar pegar as informações do usuário se ele já logou previamente,
-   * logo, teremos certeza se o usuário terá acesso ao home page.
-   */
-  checkTheUserOnTheFirstLoad(): Promise<User | null> {
-    return firstValueFrom(this.me());
   }
 }

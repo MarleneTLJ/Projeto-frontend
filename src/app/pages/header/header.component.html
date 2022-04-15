@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" role="heading">
+  <a mat-button routerLink="/" class="logo">
+    <mat-icon>home</mat-icon> Home
+  </a>
+  <span class="example-spacer"></span>
+  <!-- INÍCIO: Botão de login -->
+  <!-- Só exibe se o usuário não estiver logado -->
+  <div class="botoes">
+    <a
+      class="botoes--spacing"
+      mat-flat-button
+      routerLink="/auth/login"
+      *ngIf="!user"
+    >
+      Acesso Adminstrativo
+    </a>
+  </div>
+  <!-- FIM: Botão de login -->
+  <!-- INÍCIO: Menu do usuário -->
+  <!-- Só exibe se o usuário estiver logado -->
+  <div *ngIf="user">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon> {{ user.name }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/auth/register">
+        <mat-icon>person_add_alt_1</mat-icon>Cadastrar usuário
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>Sair
+      </button>
+    </mat-menu>
+  </div>
+  <!-- FIM: Menu do usuário -->
+</mat-toolbar>

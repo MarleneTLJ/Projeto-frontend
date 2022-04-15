@@ -21,3 +21,12 @@ Caso queira que abra automaticamente no seu navegador, utilize com a tag ```--op
 ```
 ng serve --open
 ```
+
+## Este projeto ainda está em progresso e há algumas inconveniências:
+
+- Por enquanto, apenas os "administradores" tem login, logo, a página de registro está protegida, sendo acessada apenas quando está você logado. Mesmo se tentar entrar no link, ele não irá deixar. Futuramente será feito papéis de admininstradores e usuários comuns, acabando com esta inconveniência.
+
+### Registrar o primeiro usuário
+
+Para registrar o primeiro usuário, vá até o "/src/app/app-routing.module.ts" e comente a linha "canActivate: [AuthGuard]".<br>
+Após isso, vá até o ```http://localhost:4200/auth/register``` e registre seu usuário. Feito isso, descomente a linha "canActivate: [AuthGuard]" e certifique que você não pode acessar a página de registro sem estar logado.

@@ -10,11 +10,8 @@ import { AuthService } from './shared/services';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-auth';
 
   user$: Observable<User | null> = merge(
-    // Inicia na inicialização
-    this.authService.me(),
     // Atualiza após o login/cadastro/sair
     this.authService.getUser()
   );

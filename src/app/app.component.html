@@ -1,5 +1,5 @@
 <!-- Header sempre será fixo por motivos óbvios -->
-<app-header [user]="user$ | async"></app-header>
-<div>
+<div class="container">
+  <app-header [user]="user$ | async"></app-header>
   <router-outlet></router-outlet>
 </div>
