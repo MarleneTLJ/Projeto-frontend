@@ -1,6 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LOCALE_ID } from '@angular/core';
 
 import { SharedModule } from './shared/shared.module';
 
@@ -18,6 +19,8 @@ import {
   DialogInfoSucesso,
   DialogInfoFalha,
 } from './dialogs/dialog-info/dialog-info.component';
+import { CoursesComponent } from './pages/courses/courses.component';
+import { CourseDetailComponent } from './pages/courses/course-detail/course-detail.component';
 
 @NgModule({
   imports: [
@@ -35,6 +38,8 @@ import {
     DialogCompra,
     DialogInfoSucesso,
     DialogInfoFalha,
+    CoursesComponent,
+    CourseDetailComponent,
   ],
   providers: [
     {
@@ -47,6 +52,10 @@ import {
       useClass: CatchErrorInterceptor,
       multi: true,
     },
+    {
+      provide: LOCALE_ID,
+      useValue: "pt-BR"
+    }
   ],
   bootstrap: [AppComponent],
 })

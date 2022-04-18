@@ -1,0 +1,47 @@
+<div class="container" *ngIf="course">
+  <mat-card>
+    <form>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label for="course-title">Título</mat-label>
+          <input
+            matInput
+            placeholder="Título"
+            name="title"
+            id="course-title"
+            [(ngModel)]="course.title"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Carga Horária</mat-label>
+          <input
+            matInput
+            placeholder="Carga Horária"
+            name="workload"
+            type="number"
+            [(ngModel)]="course.workload"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Preço</mat-label>
+          <input
+            matInput
+            placeholder="Preço"
+            name="price"
+            [(ngModel)]="course.price"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Descrição</mat-label>
+          <input
+            matInput
+            placeholder="Descrição"
+            name="description"
+            [(ngModel)]="course.description"
+          />
+        </mat-form-field>
+        <button mat-flat-button (click)="saveCourse()">Salvar</button>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,24 @@
+<div class="container-curso">
+  <div class="content">
+    <main class="page-view">
+      <div class="info">
+        <h2 class="info__titulo">
+          Com grandes poderes, vem grandes responsabilidades!
+        </h2>
+      </div>
+      <div class="cards">
+        <mat-card *ngFor="let course of courses">
+          <mat-card-title>{{ course.title }}</mat-card-title>
+          <mat-card-subtitle>Carga Horária: {{ course.workload }} horas</mat-card-subtitle>
+          <mat-card-content>
+            <h2>R$ {{ course.price }}</h2>
+            <p>{{ course.description }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-flat-button color="primary" routerLink="/courses/{{course._id}}">Editar</a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </main>
+  </div>
+</div>
