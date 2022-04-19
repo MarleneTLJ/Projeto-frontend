@@ -1,5 +1,5 @@
 .container {
-  max-width: 55rem;
+  max-width: 85rem;
   min-height: 45rem;
   margin: 8rem auto;
 
@@ -15,4 +15,25 @@
       border-radius: 0;
     }
   }
+}
+
+.card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mat-form-field {
+  width: 60%;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.spacing {
+  margin-left: .4rem;
+  margin-right: .4rem;
 }

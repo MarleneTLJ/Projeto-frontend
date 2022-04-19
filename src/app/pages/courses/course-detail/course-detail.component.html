@@ -1,7 +1,7 @@
 <div class="container" *ngIf="course">
   <mat-card>
     <form>
-      <mat-card-content>
+      <mat-card-content class="card-content">
         <mat-form-field>
           <mat-label for="course-title">Título</mat-label>
           <input
@@ -10,6 +10,7 @@
             name="title"
             id="course-title"
             [(ngModel)]="course.title"
+            required
           />
         </mat-form-field>
         <mat-form-field>
@@ -20,6 +21,7 @@
             name="workload"
             type="number"
             [(ngModel)]="course.workload"
+            required
           />
         </mat-form-field>
         <mat-form-field>
@@ -29,19 +31,26 @@
             placeholder="Preço"
             name="price"
             [(ngModel)]="course.price"
+            required
           />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Descrição</mat-label>
-          <input
+          <textarea
             matInput
+            rows="8"
+            cols="30"
             placeholder="Descrição"
             name="description"
             [(ngModel)]="course.description"
-          />
+            required
+          ></textarea>
         </mat-form-field>
-        <button mat-flat-button (click)="saveCourse()">Salvar</button>
       </mat-card-content>
+      <mat-card-actions>
+        <a class="spacing" mat-flat-button (click)="goBack()">Voltar</a>
+        <button class="spacing" mat-flat-button color="primary" (click)="saveCourse()">Salvar</button>
+      </mat-card-actions>
     </form>
   </mat-card>
 </div>

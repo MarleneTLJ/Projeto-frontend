@@ -5,6 +5,9 @@ import { LOCALE_ID } from '@angular/core';
 
 import { SharedModule } from './shared/shared.module';
 
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
 import { AppComponent } from './app.component';
 import { AuthHeaderInterceptor } from './interceptors/header.interceptor';
 import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
@@ -21,6 +24,13 @@ import {
 } from './dialogs/dialog-info/dialog-info.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CourseDetailComponent } from './pages/courses/course-detail/course-detail.component';
+import { CourseAddComponent } from './pages/courses/course-add/course-add.component';
+
+const maskConfigFunction: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
 
 @NgModule({
   imports: [
@@ -28,6 +38,8 @@ import { CourseDetailComponent } from './pages/courses/course-detail/course-deta
     HttpClientModule,
     SharedModule,
     AppRoutingModule,
+    NgIdleKeepaliveModule.forRoot(),
+    NgxMaskModule.forRoot(maskConfigFunction)
   ],
   declarations: [
     AppComponent,
@@ -40,6 +52,7 @@ import { CourseDetailComponent } from './pages/courses/course-detail/course-deta
     DialogInfoFalha,
     CoursesComponent,
     CourseDetailComponent,
+    CourseAddComponent,
   ],
   providers: [
     {
