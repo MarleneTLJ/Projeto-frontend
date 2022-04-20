@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap, pluck } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, firstValueFrom, of } from 'rxjs';
+import { tap, pluck, catchError } from 'rxjs/operators';
 
 import { User } from '../../interfaces/';
 
@@ -51,15 +51,7 @@ export class AuthService {
         password,
         repeatPassword,
       })
-      .pipe(
-        // Na atual situação de registrar um usuário, não é necessário criar um token para ele
-
-        // tap(({ token, user }) => {
-        //   this.setUser(user);
-        //   this.tokenStorage.saveToken(token);
-        // }),
-        pluck('user')
-      );
+      .pipe(pluck('user'));
   }
 
   setUser(user: User | null): void {
@@ -78,5 +70,19 @@ export class AuthService {
   getAuthorizationHeaders() {
     const token: string | null = this.tokenStorage.getToken() || '';
     return { Authorization: `Bearer ${token}` };
+  }
+
+  me(): Observable<User | null> {
+    return this.http
+      .get<AuthResponse>('http://localhost:3000/api/auth/me')
+      .pipe(
+        tap(({ user }) => this.setUser(user)),
+        pluck('user'),
+        catchError(() => of(null))
+      );
+  }
+
+  checkTheUserOnTheFirstLoad(): Promise<User | null> {
+    return firstValueFrom(this.me());
   }
 }

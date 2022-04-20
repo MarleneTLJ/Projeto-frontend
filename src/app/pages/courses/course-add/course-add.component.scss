@@ -2,6 +2,7 @@
   max-width: 55rem;
   min-height: 45rem;
   margin: 8rem auto;
+  font-size: 1.6rem;
 
   @media only screen and (max-width: 75em) {
     .container {
@@ -17,11 +18,6 @@
   }
 }
 
-.card-header {
-  text-align: center;
-  margin: 2rem;
-}
-
 .card-content {
   display: flex;
   justify-content: center;
@@ -30,10 +26,15 @@
 }
 
 .mat-form-field {
-  width: 50%;
+  width: 70%;
 }
 
 mat-card-actions {
   display: flex;
   justify-content: center;
+}
+
+.spacing {
+  margin-left: .4rem;
+  margin-right: .4rem;
 }

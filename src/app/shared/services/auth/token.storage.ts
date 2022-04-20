@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class TokenStorage {
-  private tokenKey = 'authToken';
+  private tokenKey = 'auth-token';
 
   signOut(): void {
     localStorage.removeItem(this.tokenKey);

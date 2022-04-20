@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -20,7 +21,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
   exports: [
@@ -37,6 +38,7 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     MatSelectModule,
     MatDialogModule,
     MatButtonModule,
+    MatTooltipModule,
     MatDividerModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -45,7 +47,7 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     MatFormFieldModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
   ],
 })
 export class SharedModule {}

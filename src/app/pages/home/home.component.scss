@@ -132,8 +132,7 @@ hr.linha {
   display: flex;
   justify-content: center;
   align-items: center;
-  // flex-direction: row;
-  // flex-wrap: wrap;
+  flex-wrap: wrap;
 
   @media only screen and (max-width: 56.25em) {
     flex-direction: column;

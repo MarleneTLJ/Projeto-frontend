@@ -1,0 +1,102 @@
+<div class="container">
+  <mat-card>
+    <!-- INÍCIO: Form para adicionar curso -->
+    <form [formGroup]="courseForm">
+      <mat-card-content class="card-content">
+        <div class="alert alert-danger" *ngIf="error">
+          <p>{{ error }}</p>
+        </div>
+        <!-- INÍCIO: Título -->
+        <mat-form-field>
+          <mat-label>Título</mat-label>
+          <input
+            matInput
+            minlength="3"
+            maxlength="255"
+            placeholder="Título"
+            formControlName="title"
+            name="title"
+            required
+          />
+          <mat-error>
+            <div *ngIf="title.invalid">
+              <div *ngIf="title.errors?.['required']">Título é obrigatório</div>
+              <div *ngIf="title.errors?.['minlength']">
+                Título deve ter no mínimo 3 caracteres
+              </div>
+              <div *ngIf="title.errors?.['maxlength']">
+                Título deve ter no máximo 255 caracteres
+              </div>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <!-- FIM: Título -->
+        <!-- INÍCIO: Carga Horária -->
+        <mat-form-field>
+          <mat-label>Carga Horária</mat-label>
+          <input
+            matInput
+            placeholder="Carga Horária"
+            formControlName="workload"
+            name="workload"
+            type="number"
+            required
+          />
+          <mat-error>
+            <div *ngIf="workload.invalid">
+              <div *ngIf="workload.errors?.['required']">
+                Carga Horária é obrigatório
+              </div>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <!-- FIM: Carga Horária -->
+        <!-- INÍCIO: Preço -->
+        <mat-form-field>
+          <mat-label>Preço</mat-label>
+          <input
+            matInput
+            placeholder="Preço"
+            formControlName="price"
+            name="price"
+            required
+          />
+          <mat-error>
+            <div *ngIf="price.invalid">
+              <div *ngIf="price.errors?.['required']">
+                Preço é obrigatório
+              </div>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <!-- FIM: Preço -->
+        <!-- INÍCIO: Descrição -->
+        <mat-form-field>
+          <mat-label>Descrição</mat-label>
+          <textarea
+            matInput
+            rows="8"
+            cols="30"
+            placeholder="Descrição"
+            formControlName="description"
+            name="description"
+            required
+          ></textarea>
+          <mat-error>
+            <div *ngIf="description.invalid">
+              <div *ngIf="description.errors?.['required']">
+                Descrição é obrigatório
+              </div>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <!-- FIM: Descrição -->
+      </mat-card-content>
+      <mat-card-actions>
+        <a class="spacing" mat-flat-button (click)="goBack()">Voltar</a>
+        <button class="spacing" mat-flat-button color="primary" (click)="addCourse()">Salvar</button>
+      </mat-card-actions>
+    </form>
+    <!-- FIM: Form para adicionar curso -->
+  </mat-card>
+</div>

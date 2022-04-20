@@ -23,18 +23,10 @@
   &__titulo {
     font-size: 2.4rem;
     font-weight: 500;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
     text-transform: uppercase;
     text-align: center;
-
-    @media only screen and (max-width: 56.25em) {
-      font-size: 1.7rem;
-    }
-
-    @media only screen and (max-width: 37.5em) {
-      font-size: 1.6rem;
-    }
   }
 }
 
@@ -42,8 +34,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // flex-direction: row;
-  // flex-wrap: wrap;
+  flex-wrap: wrap;
 
   @media only screen and (max-width: 56.25em) {
     flex-direction: column;
@@ -64,6 +55,17 @@ mat-card-actions {
   justify-content: center;
 }
 
+.spacing {
+  margin-left: .4rem;
+  margin-right: .4rem;
+}
+
 p {
   font-size: 1.6rem;
+}
+
+.add {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }

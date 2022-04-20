@@ -52,14 +52,37 @@ export class CourseService {
     return this.http.get<Course>(url).pipe(catchError(this.handleError));
   }
 
-  updateCourse(course: Course): Observable<any> {
-    const url = `http://localhost:3000/api/courses/${course._id}`;
+  // Adiciona um curso
+  addCourse(
+    title: string,
+    workload: number,
+    price: string,
+    description: string
+  ): Observable<Course> {
     return this.http
-      .put(
-        url,
-        course,
+      .post<Course>(
+        'http://localhost:3000/api/courses',
+        { title, workload, price, description },
         this.httpOptions
       )
+      .pipe(catchError(this.handleError));
+  }
+
+  // Atualiza um curso
+  updateCourse(course: Course): Observable<any> {
+    const url = `http://localhost:3000/api/courses/${course._id}`;
+
+    return this.http
+      .put(url, course, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Deleta um curso
+  deleteCourse(id: string): Observable<Course> {
+    const url = `http://localhost:3000/api/courses/${id}`;
+
+    return this.http
+      .delete<Course>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 }

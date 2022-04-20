@@ -15,13 +15,13 @@
       Acesso Adminstrativo
     </a>
     <!-- Para fins de testes -->
-    <a
+    <!-- <a
       class="botoes--spacing"
       mat-flat-button
       routerLink="/courses"
     >
-      Cursos
-    </a>
+      Botão temporário
+    </a> -->
   </div>
   <!-- FIM: Botão de login -->
   <!-- INÍCIO: Menu do usuário -->
@@ -33,6 +33,9 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="/auth/register">
         <mat-icon>person_add_alt_1</mat-icon>Cadastrar usuário
+      </button>
+      <button mat-menu-item routerLink="/courses">
+        <mat-icon>school</mat-icon>Cursos
       </button>
       <button mat-menu-item (click)="logout()">
         <mat-icon>logout</mat-icon>Sair

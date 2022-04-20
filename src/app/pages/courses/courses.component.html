@@ -6,16 +6,44 @@
           Com grandes poderes, vem grandes responsabilidades!
         </h2>
       </div>
+      <div class="add">
+        <a
+          mat-fab
+          color="primary"
+          matTooltip="Adicionar curso"
+          matTooltipPosition="before"
+          aria-label="Icone de adicionar um curso"
+          routerLink="/course-add"
+        >
+          <mat-icon>add</mat-icon>
+        </a>
+      </div>
       <div class="cards">
         <mat-card *ngFor="let course of courses">
           <mat-card-title>{{ course.title }}</mat-card-title>
-          <mat-card-subtitle>Carga Horária: {{ course.workload }} horas</mat-card-subtitle>
+          <mat-card-subtitle
+            >Carga Horária: {{ course.workload }} horas</mat-card-subtitle
+          >
           <mat-card-content>
             <h2>R$ {{ course.price }}</h2>
             <p>{{ course.description }}</p>
           </mat-card-content>
           <mat-card-actions>
-            <a mat-flat-button color="primary" routerLink="/courses/{{course._id}}">Editar</a>
+            <a
+              mat-flat-button
+              color="primary"
+              class="spacing"
+              routerLink="/course-detail/{{ course._id }}"
+              >Editar</a
+            >
+            <button
+              mat-flat-button
+              color="warn"
+              class="spacing"
+              (click)="openDialog(course)"
+            >
+              Excluir
+            </button>
           </mat-card-actions>
         </mat-card>
       </div>

@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CourseDetailComponent } from './pages/courses/course-detail/course-detail.component';
+import { CourseAddComponent } from './pages/courses/course-add/course-add.component';
 
 const routes: Routes = [
   {
@@ -26,13 +27,18 @@ const routes: Routes = [
   {
     path: 'courses',
     component: CoursesComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
-    path: 'courses/:id',
+    path: 'course-detail/:id',
     component: CourseDetailComponent,
-    // canActivate: [AuthGuard],
-  }
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'course-add',
+    component: CourseAddComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
