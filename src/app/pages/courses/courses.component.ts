@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Course } from 'src/app/shared/interfaces';
 import { CourseService } from '../../shared/services';
+import { DialogInfoConf } from '../../dialogs/dialog-info/dialog-info.component';
 
 @Component({
   selector: 'app-courses',
@@ -12,17 +14,22 @@ import { CourseService } from '../../shared/services';
 export class CoursesComponent implements OnInit {
   courses: Course[] = [];
 
-  constructor(
-    private courseService: CourseService,
-    private location: Location
-  ) {}
+  constructor(private courseService: CourseService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getCourses();
   }
 
-  goBack(): void {
-    this.location.back();
+  // Dialogo/modal de confirmação de exclusão do curso
+  openDialog(course: Course) {
+    const dialogRef = this.dialog.open(DialogInfoConf);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.deleteCourse(course);
+      }
+    });
   }
 
   // Pega todos os cursos

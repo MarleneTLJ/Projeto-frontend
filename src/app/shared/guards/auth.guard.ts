@@ -10,11 +10,11 @@ import { AuthService } from '../services';
 export class AuthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {}
 
-  // Isso evita que um usuário não logado acesse a página de cadastro
+  // Isso evita que um usuário não logado acesse páginas não autorizadas
   canActivate(): Observable<boolean> {
     return this.authService.getUser().pipe(
       map(user => {
-        if (user) {
+        if (user !== null) {
           return true;
         }
         this.router.navigateByUrl('');

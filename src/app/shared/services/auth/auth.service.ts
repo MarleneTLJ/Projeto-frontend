@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { tap, pluck } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, firstValueFrom, of } from 'rxjs';
+import { tap, pluck, catchError } from 'rxjs/operators';
 
 import { User } from '../../interfaces/';
 
@@ -16,9 +16,8 @@ interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private user$ = new BehaviorSubject<User | null>(null);
-  private userLoggedIn = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorage) { this.userLoggedIn.next(false); }
+  constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
 
   // Função do usuário fazer login
   login(email: string, password: string): Observable<User> {
@@ -52,23 +51,7 @@ export class AuthService {
         password,
         repeatPassword,
       })
-      .pipe(
-        // Na atual situação de registrar um usuário, não é necessário criar um token para ele
-
-        // tap(({ token, user }) => {
-        //   this.setUser(user);
-        //   this.tokenStorage.saveToken(token);
-        // }),
-        pluck('user')
-      );
-  }
-
-  setUserLoggedIn(userLoggedIn: boolean) {
-    this.userLoggedIn.next(userLoggedIn);
-  }
-
-  getUserLoggedIn(): Observable<boolean> {
-    return this.userLoggedIn.asObservable();
+      .pipe(pluck('user'));
   }
 
   setUser(user: User | null): void {
@@ -87,5 +70,19 @@ export class AuthService {
   getAuthorizationHeaders() {
     const token: string | null = this.tokenStorage.getToken() || '';
     return { Authorization: `Bearer ${token}` };
+  }
+
+  me(): Observable<User | null> {
+    return this.http
+      .get<AuthResponse>('http://localhost:3000/api/auth/me')
+      .pipe(
+        tap(({ user }) => this.setUser(user)),
+        pluck('user'),
+        catchError(() => of(null))
+      );
+  }
+
+  checkTheUserOnTheFirstLoad(): Promise<User | null> {
+    return firstValueFrom(this.me());
   }
 }

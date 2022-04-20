@@ -1,0 +1,18 @@
+<div>
+  <mat-dialog-content>
+    <h2>Atenção!</h2>
+    <p>Você está prestes a excluir um curso!</p>
+    <p>Tem certeza que quer fazer isso?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-stroked-button [mat-dialog-close]="false">Cancelar</button>
+    <button
+      mat-flat-button
+      color="warn"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      Excluir
+    </button>
+  </mat-dialog-actions>
+</div>

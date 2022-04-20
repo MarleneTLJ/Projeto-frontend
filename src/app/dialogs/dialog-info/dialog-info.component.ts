@@ -12,10 +12,10 @@ export class DialogInfoSucesso {
 }
 
 @Component({
-  templateUrl: './dialog-falha.component.html',
+  templateUrl: './dialog-conf.component.html',
   styleUrls: ['./dialog-info.component.scss']
 })
-export class DialogInfoFalha {
+export class DialogInfoConf {
 
   constructor() { }
 

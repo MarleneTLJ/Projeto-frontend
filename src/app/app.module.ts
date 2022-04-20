@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LOCALE_ID } from '@angular/core';
 
@@ -20,11 +20,16 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import {
   DialogInfoSucesso,
-  DialogInfoFalha,
+  DialogInfoConf,
 } from './dialogs/dialog-info/dialog-info.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CourseDetailComponent } from './pages/courses/course-detail/course-detail.component';
 import { CourseAddComponent } from './pages/courses/course-add/course-add.component';
+import { AuthService } from './shared/services';
+
+export function appInitializerFactory(authService: AuthService) {
+  return () => authService.checkTheUserOnTheFirstLoad();
+}
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -49,7 +54,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     HomeComponent,
     DialogCompra,
     DialogInfoSucesso,
-    DialogInfoFalha,
+    DialogInfoConf,
     CoursesComponent,
     CourseDetailComponent,
     CourseAddComponent,
@@ -64,6 +69,12 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
       provide: HTTP_INTERCEPTORS,
       useClass: CatchErrorInterceptor,
       multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      multi: true,
+      deps: [AuthService],
     },
     {
       provide: LOCALE_ID,

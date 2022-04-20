@@ -48,7 +48,6 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({
       // Se estiver tudo correto, ele leva o usuário até a home page
       next: () => {
-        this.authService.setUserLoggedIn(true);
         this.router.navigate(['']);
       },
       // Pega o erro para jogar na tela

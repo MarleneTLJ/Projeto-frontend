@@ -18,6 +18,8 @@ export class AppComponent {
   lastPing?: Date;
 
   user$: Observable<User | null> = merge(
+    // Init on startup
+    this.authService.me(),
     // Atualiza após o login/cadastro/sair
     this.authService.getUser()
   );
@@ -28,15 +30,15 @@ export class AppComponent {
     private idle: Idle,
     private keepalive: Keepalive
   ) {
-    // sets an idle timeout of 5 seconds, for testing purposes.
-    idle.setIdle(10);
-    // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
-    idle.setTimeout(60);
-    // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+    // Coloca um idle timout de 10 minutos
+    idle.setIdle(600);
+    // Coloca um período de timout de 10 segundos, e após isso, o usuário é deslogado automaticamente
+    idle.setTimeout(10);
+    // Coloca sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     idle.onIdleEnd.subscribe(() => {
-      this.idleState = 'No longer idle.'
+      this.idleState = 'No longer idle.';
       console.log(this.idleState);
       this.reset();
     });
@@ -50,28 +52,28 @@ export class AppComponent {
     });
 
     idle.onIdleStart.subscribe(() => {
-        this.idleState = 'You\'ve gone idle!'
-        console.log(this.idleState);
+      this.idleState = "You've gone idle!";
+      console.log(this.idleState);
     });
 
     idle.onTimeoutWarning.subscribe((countdown) => {
-      this.idleState = 'You will time out in ' + countdown + ' seconds!'
+      this.idleState = 'You will time out in ' + countdown + ' seconds!';
       console.log(this.idleState);
     });
 
     // Coloca o ping em um intervalo de ?? minutos
     keepalive.interval(60);
 
-    keepalive.onPing.subscribe(() => this.lastPing = new Date());
+    keepalive.onPing.subscribe(() => (this.lastPing = new Date()));
 
-    this.authService.getUserLoggedIn().subscribe(userLoggedIn => {
+    this.authService.getUser().subscribe((userLoggedIn) => {
       if (userLoggedIn) {
-        idle.watch()
+        idle.watch();
         this.timedOut = false;
       } else {
         idle.stop();
       }
-    })
+    });
   }
 
   reset() {
