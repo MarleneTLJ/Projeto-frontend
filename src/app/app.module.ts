@@ -26,6 +26,9 @@ import { CoursesComponent } from './pages/courses/courses.component';
 import { CourseDetailComponent } from './pages/courses/course-detail/course-detail.component';
 import { CourseAddComponent } from './pages/courses/course-add/course-add.component';
 import { AuthService } from './shared/services';
+import { ClientsComponent } from './pages/clients/clients.component';
+import { ClientAddComponent } from './pages/clients/client-add/client-add.component';
+import { ClientDetailComponent } from './pages/clients/client-detail/client-detail.component';
 
 export function appInitializerFactory(authService: AuthService) {
   return () => authService.checkTheUserOnTheFirstLoad();
@@ -58,6 +61,9 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     CoursesComponent,
     CourseDetailComponent,
     CourseAddComponent,
+    ClientsComponent,
+    ClientAddComponent,
+    ClientDetailComponent,
   ],
   providers: [
     {

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Course } from 'src/app/shared/interfaces';

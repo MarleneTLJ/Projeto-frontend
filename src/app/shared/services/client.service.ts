@@ -5,7 +5,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 
-import { Course } from '../../interfaces';
+import { Client } from '../interfaces';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
-export class CourseService {
+export class ClientService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -38,51 +38,51 @@ export class CourseService {
     );
   }
 
-  // Pega todos os cursos
-  getCourses(): Observable<Course[]> {
+  // Pega todos os clientes
+  getClients(): Observable<Client[]> {
     return this.http
-      .get<Course[]>('http://localhost:3000/api/courses')
+      .get<Client[]>('http://localhost:3000/api/clients')
       .pipe(catchError(this.handleError));
   }
 
-  // Pega um curso pelo id
-  getCourse(id: string): Observable<Course> {
-    const url = `http://localhost:3000/api/courses/${id}`;
+  // Pega um cliente pelo id
+  getClient(id: string): Observable<Client> {
+    const url = `http://localhost:3000/api/clients/${id}`;
 
-    return this.http.get<Course>(url).pipe(catchError(this.handleError));
+    return this.http.get<Client>(url).pipe(catchError(this.handleError));
   }
 
-  // Adiciona um curso
-  addCourse(
-    title: string,
-    workload: number,
-    price: string,
-    description: string
-  ): Observable<Course> {
+  // Adiciona um cliente
+  addClient(
+    name: string,
+    surname: number,
+    email: string,
+    cpf: number
+  ): Observable<Client> {
     return this.http
-      .post<Course>(
-        'http://localhost:3000/api/courses',
-        { title, workload, price, description },
+      .post<Client>(
+        'http://localhost:3000/api/clients',
+        { name, surname, email, cpf },
         this.httpOptions
       )
       .pipe(catchError(this.handleError));
   }
 
-  // Atualiza um curso
-  updateCourse(course: Course): Observable<any> {
-    const url = `http://localhost:3000/api/courses/${course._id}`;
+  // Atualiza um cliente
+  updateClient(client: Client): Observable<any> {
+    const url = `http://localhost:3000/api/clients/${client._id}`;
 
     return this.http
-      .put(url, course, this.httpOptions)
+      .put(url, client, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  // Deleta um curso
-  deleteCourse(id: string): Observable<Course> {
-    const url = `http://localhost:3000/api/courses/${id}`;
+  // Deleta um cliente
+  deleteClient(id: string): Observable<Client> {
+    const url = `http://localhost:3000/api/clients/${id}`;
 
     return this.http
-      .delete<Course>(url, this.httpOptions)
+      .delete<Client>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 }

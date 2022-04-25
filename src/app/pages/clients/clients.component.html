@@ -1,0 +1,53 @@
+<div class="container-cliente">
+    <div class="content">
+      <main class="page-view">
+        <div class="info">
+          <h2 class="info__titulo">
+            Essas pessoas pagam o seu salário.<br>
+            Trate-as bem e tolere suas burrices.
+          </h2>
+        </div>
+        <div class="add">
+          <a
+            mat-fab
+            color="primary"
+            matTooltip="Adicionar cliente"
+            matTooltipPosition="before"
+            aria-label="Icone de adicionar um cliente"
+            routerLink="/client-add"
+          >
+            <mat-icon>add</mat-icon>
+          </a>
+        </div>
+        <div class="cards">
+          <mat-card *ngFor="let client of clients">
+            <mat-card-title>ID: {{ client._id }}</mat-card-title>
+            <mat-card-content>
+                <p><strong>Nome:</strong> {{ client.name }} </p>
+                <p><strong>Sobrenome:</strong> {{ client.surname }} </p>
+                <p><strong>E-mail:</strong> {{ client.email }}</p>
+                <p><strong>CPF:</strong> {{ client.cpf }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <a
+                mat-flat-button
+                color="primary"
+                class="spacing"
+                routerLink="/client-detail/{{ client._id }}"
+                >Editar</a
+              >
+              <button
+                mat-flat-button
+                color="warn"
+                class="spacing"
+                (click)="openDialog(client)"
+              >
+                Excluir
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </main>
+    </div>
+  </div>
+  
