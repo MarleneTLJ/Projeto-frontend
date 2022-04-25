@@ -29,8 +29,6 @@ export class HomeComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(DialogCompra);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 }

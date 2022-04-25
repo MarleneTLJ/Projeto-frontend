@@ -62,9 +62,7 @@ export class CourseAddComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(DialogInfoSucesso);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   // Adiciona um curso

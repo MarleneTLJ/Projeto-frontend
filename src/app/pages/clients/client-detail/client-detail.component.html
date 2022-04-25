@@ -1,0 +1,57 @@
+<div class="container" *ngIf="client">
+    <mat-card>
+      <form>
+        <mat-card-content class="card-content">
+          <mat-form-field>
+            <mat-label for="client-name">Nome</mat-label>
+            <input
+              matInput
+              placeholder="Nome"
+              name="name"
+              id="client-name"
+              [(ngModel)]="client.name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label for="client-surname">Sobrenome</mat-label>
+            <input
+              matInput
+              placeholder="Sobrenome"
+              name="surname"
+              id="client-surname"
+              [(ngModel)]="client.surname"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label for="client-email">E-mail</mat-label>
+            <input
+              matInput
+              placeholder="E-mail"
+              name="email"
+              id="client-email"
+              [(ngModel)]="client.email"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label for="client-cpf">CPF</mat-label>
+            <input
+              matInput
+              placeholder="CPF"
+              name="cpf"
+              id="client-cpf"
+              [(ngModel)]="client.cpf"
+              required
+            >
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <a class="spacing" mat-flat-button (click)="goBack()">Voltar</a>
+          <button class="spacing" mat-flat-button color="primary" (click)="saveClient()">Salvar</button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+  

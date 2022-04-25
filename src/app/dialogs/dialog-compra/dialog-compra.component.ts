@@ -5,7 +5,7 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { Validacoes } from './validacoes.component';
+import { Validacoes } from '../../pages/clients/client-add/validacoes.component';
 
 @Component({
   selector: 'dialog-compra',

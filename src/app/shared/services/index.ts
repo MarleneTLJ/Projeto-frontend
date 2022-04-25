@@ -1,2 +1,3 @@
 export * from './auth/auth.service';
-export * from './course/course.service';
+export * from './course.service';
+export * from './client.service'
