@@ -56,6 +56,8 @@
           <mat-label>Preço</mat-label>
           <input
             matInput
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
             placeholder="Preço"
             formControlName="price"
             name="price"
@@ -63,9 +65,7 @@
           />
           <mat-error>
             <div *ngIf="price.invalid">
-              <div *ngIf="price.errors?.['required']">
-                Preço é obrigatório
-              </div>
+              <div *ngIf="price.errors?.['required']">Preço é obrigatório</div>
             </div>
           </mat-error>
         </mat-form-field>
@@ -94,7 +94,14 @@
       </mat-card-content>
       <mat-card-actions>
         <a class="spacing" mat-stroked-button (click)="goBack()">Voltar</a>
-        <button class="spacing" mat-flat-button color="primary" (click)="addCourse()">Salvar</button>
+        <button
+          class="spacing"
+          mat-flat-button
+          color="primary"
+          (click)="addCourse()"
+        >
+          Salvar
+        </button>
       </mat-card-actions>
     </form>
     <!-- FIM: Form para adicionar curso -->

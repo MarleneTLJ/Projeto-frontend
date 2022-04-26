@@ -11,7 +11,10 @@
       </h1>
     </div>
     <div class="info">
-      <h2 class="info__titulo">
+      <h2 class="info__titulo alert alert-danger" *ngIf="error">
+        {{ error }}
+      </h2>
+      <h2 class="info__titulo" *ngIf="!error">
         Cursos melhores que o do SENAI!
       </h2>
     </div>

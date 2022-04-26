@@ -56,7 +56,7 @@ export class CourseService {
   addCourse(
     title: string,
     workload: number,
-    price: string,
+    price: number,
     description: string
   ): Observable<Course> {
     return this.http
