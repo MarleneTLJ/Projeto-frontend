@@ -13,6 +13,7 @@ import { CourseService } from '../../shared/services';
 
 export class HomeComponent implements OnInit {
   courses: Course[] = [];
+  error: string | null = null;
 
   constructor(public dialog: MatDialog, private courseService: CourseService) {}
 
@@ -23,7 +24,10 @@ export class HomeComponent implements OnInit {
   getCourses() {
     this.courseService
       .getCourses()
-      .subscribe((courses) => (this.courses = courses));
+      .subscribe({
+        next: (courses) => (this.courses = courses),
+        error: () => this.error = 'Sem conexão com o banco de dados!'
+      });
   }
 
   openDialog() {
