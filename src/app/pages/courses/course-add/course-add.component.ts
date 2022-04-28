@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import { CourseService } from 'src/app/shared/services';
 import { DialogInfoSucesso } from 'src/app/dialogs/dialog-info/dialog-info.component';
@@ -22,7 +23,8 @@ export class CourseAddComponent implements OnInit {
   constructor(
     private courseService: CourseService,
     private location: Location,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {}
@@ -80,7 +82,7 @@ export class CourseAddComponent implements OnInit {
       .subscribe({
         next: () => {
           this.openDialog();
-          this.goBack();
+          this.router.navigate(['courses']);
         },
         // Pega o erro para jogar na tela
         error: () => {

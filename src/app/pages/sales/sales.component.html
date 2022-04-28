@@ -1,0 +1,59 @@
+<div class="container-curso">
+  <div class="content">
+    <main class="page-view">
+      <div class="add">
+        <a
+          mat-fab
+          color="primary"
+          matTooltip="Adicionar compra"
+          matTooltipPosition="before"
+          aria-label="Icone de adicionar uma compra"
+          routerLink="/sale-add"
+        >
+          <mat-icon>add</mat-icon>
+        </a>
+      </div>
+      <div class="cards">
+        <mat-card class="mat-elevation-z0 outlined-card" *ngFor="let sale of sales">
+          <mat-card-title>ID: {{ sale._id }} 
+            <span>
+              <button class="mat-elevation-z0" mat-mini-fab color="warn" (click)="openDialog(sale)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </span>
+          </mat-card-title>
+          <mat-card-content>
+            <p><strong>Nome do cliente:</strong> {{ sale.client.name }}</p>
+            <p><strong>Sobrenome do cliente:</strong> {{ sale.client.surname }}</p>
+            <p><strong>E-mail:</strong> {{ sale.client.email }}</p>
+            <p><strong>CPF:</strong> {{ sale.client.cpf }}</p>
+            <mat-accordion *ngFor="let course of sale.courses">
+              <mat-expansion-panel class="mat-elevation-z0 outlined-card">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span><strong>Curso:</strong> {{ course.title }}</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                  <p><strong>Carga Horária:</strong> {{ course.workload }}</p>
+                  <p><strong>Preço:</strong> {{ course.price }}</p>
+                  <p><strong>Descrição:</strong> {{ course.description }}</p>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <p><strong>Valor pago:</strong> {{ sale.value_paid }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a
+                mat-raised-button
+                color="primary"
+                class="spacing"
+                routerLink="/sale-detail/{{ sale._id }}"
+                >Gerar PDF</a
+              >
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </main>
+  </div>
+</div>

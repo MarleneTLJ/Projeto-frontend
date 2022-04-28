@@ -20,7 +20,7 @@
           </a>
         </div>
         <div class="cards">
-          <mat-card *ngFor="let client of clients">
+          <mat-card class="mat-elevation-z0 outlined-card" *ngFor="let client of clients">
             <mat-card-title>ID: {{ client._id }}</mat-card-title>
             <mat-card-content>
                 <p><strong>Nome:</strong> {{ client.name }} </p>

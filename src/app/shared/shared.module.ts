@@ -16,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,6 +43,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     MatDividerModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatGridListModule,
     MatSnackBarModule,
     MatExpansionModule,
     MatFormFieldModule,

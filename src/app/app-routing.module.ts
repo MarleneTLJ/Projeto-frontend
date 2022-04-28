@@ -12,6 +12,9 @@ import { CourseAddComponent } from './pages/courses/course-add/course-add.compon
 import { ClientsComponent } from './pages/clients/clients.component';
 import { ClientAddComponent } from './pages/clients/client-add/client-add.component';
 import { ClientDetailComponent } from './pages/clients/client-detail/client-detail.component';
+import { SalesComponent } from './pages/sales/sales.component';
+import { SaleAddComponent } from './pages/sales/sale-add/sale-add.component';
+import { SaleDetailComponent } from './pages/sales/sale-detail/sale-detail.component';
 
 const routes: Routes = [
   {
@@ -56,7 +59,22 @@ const routes: Routes = [
     path: 'client-add',
     component: ClientAddComponent,
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'sales',
+    component: SalesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'sale-add',
+    component: SaleAddComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'sale-detail/:id',
+    component: SaleDetailComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
