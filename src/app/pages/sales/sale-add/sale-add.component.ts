@@ -12,9 +12,11 @@ import { Router } from '@angular/router';
 
 import { SaleService } from 'src/app/shared/services';
 import { CourseService } from 'src/app/shared/services';
-import { Course } from 'src/app/shared/interfaces';
-import { Validacoes } from '../../clients/client-add/validacoes.component';
+import { ClientService } from 'src/app/shared/services';
+import { Client, Course } from 'src/app/shared/interfaces';
 import { DialogInfoSucesso } from 'src/app/dialogs/dialog-info/dialog-info.component';
+import { distinctUntilChanged, map, Observable, startWith } from 'rxjs';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-sale-add',
@@ -25,12 +27,15 @@ export class SaleAddComponent implements OnInit {
   error: string | null = null;
   saleForm!: FormGroup;
   courses: Course[] = [];
+  clients: Client[] = [];
+  filteredClients$!: Observable<Client[]>;
+  isLoading = false;
   total: number = 0;
-  check = true;
 
   constructor(
     private saleService: SaleService,
     private courseService: CourseService,
+    private clientService: ClientService,
     public dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder
@@ -38,6 +43,7 @@ export class SaleAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCourses();
+    this.getClients();
 
     this.saleForm = this.fb.group({
       clientForm: this.fb.group({
@@ -58,14 +64,47 @@ export class SaleAddComponent implements OnInit {
           ],
         ],
         email: ['', [Validators.required, Validators.email]],
-        cpf: [
-          '',
-          Validators.compose([Validators.required, Validacoes.ValidaCpf]),
-        ],
+        cpf: ['', [Validators.required, Validators.maxLength(11)]],
       }),
-      courseArray: this.fb.array([]),
+      courseArray: this.fb.array([], [Validators.required]),
       value_paid: ['', Validators.required],
     });
+
+    this.filteredClients$ = this.clientForm.get('name')!.valueChanges.pipe(
+      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+      startWith(''),
+      map((value) => (typeof value === 'string' ? value : value.name)),
+      map((name) => (name ? this._filter(name) : this.clients.slice()))
+    );
+  }
+
+  // Pega todos os clientes
+  getClients(): void {
+    this.clientService
+      .getClients()
+      .subscribe((clients) => (this.clients = clients));
+  }
+
+  private _filter(name: string): Client[] {
+    const filterValue = name.toLowerCase();
+
+    return this.clients.filter((option) =>
+      option.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  setFormData(event: MatAutocompleteSelectedEvent) {
+    let client = event.option.value;
+    if (client) {
+      this.clientForm.get('name')!.setValue(client.name, { emitEvent: false });
+      this.clientForm
+        .get('surname')!
+        .setValue(client.surname, { emitEvent: false });
+      this.clientForm
+        .get('email')!
+        .setValue(client.email, { emitEvent: false });
+      this.clientForm.get('cpf')!.setValue(client.cpf, { emitEvent: false });
+    }
   }
 
   checkValue() {
@@ -74,15 +113,17 @@ export class SaleAddComponent implements OnInit {
       .map((checked: any, i: any) => (checked ? this.courses[i].price : null))
       .filter((v: any) => v !== null);
 
-    // Soma os preços do curso clicado na variável de total
+    // Soma os preços colocando na variável de total
     this.total = selectedCourse.reduce((acc: any, curr: any) => {
       return acc + curr;
     }, 0);
 
     // Atualiza automaticamente o input de valor pago através do form
     this.saleForm.patchValue({
-      value_paid: this.total
+      value_paid: this.total,
     });
+
+    console.log(selectedCourse);
   }
 
   // Função para colocar o curso no array ao clicar no checkbox
@@ -134,7 +175,7 @@ export class SaleAddComponent implements OnInit {
   // Adiciona uma compra
   addSale(): void {
     // Se estiver incorreto os dados que o usuário inseriu, ele retorna nada
-    if (this.saleForm.invalid) {
+    if (this.saleForm.invalid || this.total === 0) {
       return;
     }
 

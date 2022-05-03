@@ -30,7 +30,7 @@
   flex-direction: column;
 }
 
-.mat-form-field {
+mat-form-field {
   width: 70%;
 }
 
@@ -42,4 +42,18 @@ mat-card-actions {
 .spacing {
   margin-left: 0.4rem;
   margin-right: 0.4rem;
+}
+
+.is-loading ::ng-deep .mat-option-text {
+  display: flex;
+  justify-content: center;
+}
+
+.checkboxes {
+  margin: .5rem;
+}
+
+.value-paid {
+  width: 20%;
+  margin-top: 2rem;
 }

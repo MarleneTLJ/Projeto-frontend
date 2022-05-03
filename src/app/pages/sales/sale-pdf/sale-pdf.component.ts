@@ -9,11 +9,11 @@ import { Sale } from 'src/app/shared/interfaces';
 import { SaleService } from '../../../shared/services';
 
 @Component({
-  selector: 'app-sale-detail',
-  templateUrl: './sale-detail.component.html',
-  styleUrls: ['./sale-detail.component.scss'],
+  selector: 'app-sale-pdf',
+  templateUrl: './sale-pdf.component.html',
+  styleUrls: ['./sale-pdf.component.scss'],
 })
-export class SaleDetailComponent implements OnInit {
+export class SalePdfComponent implements OnInit {
   sale: Sale | undefined;
 
   @ViewChild('salepdf') salepdf!: ElementRef;
@@ -41,7 +41,7 @@ export class SaleDetailComponent implements OnInit {
   makePdf(): void {
     let DATA: any = document.getElementById('salepdf');
     html2canvas(DATA).then((canvas) => {
-      let fileWidth = 150;
+      let fileWidth = 98;
       let fileHeigth = (canvas.height * fileWidth) / canvas.width;
       const FILEURI = canvas.toDataURL('image/png');
       let PDF = new jsPDF('p', 'mm', 'a4');

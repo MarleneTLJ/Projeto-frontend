@@ -14,7 +14,7 @@ import { ClientAddComponent } from './pages/clients/client-add/client-add.compon
 import { ClientDetailComponent } from './pages/clients/client-detail/client-detail.component';
 import { SalesComponent } from './pages/sales/sales.component';
 import { SaleAddComponent } from './pages/sales/sale-add/sale-add.component';
-import { SaleDetailComponent } from './pages/sales/sale-detail/sale-detail.component';
+import { SalePdfComponent } from './pages/sales/sale-pdf/sale-pdf.component';
 
 const routes: Routes = [
   {
@@ -71,8 +71,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'sale-detail/:id',
-    component: SaleDetailComponent,
+    path: 'sale-pdf/:id',
+    component: SalePdfComponent,
     canActivate: [AuthGuard],
   },
 ];
