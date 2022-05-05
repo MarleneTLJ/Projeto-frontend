@@ -36,11 +36,14 @@
           <mat-label for="sale-cpf">CPF</mat-label>
           <input
             matInput
+            maxlength="11"
+            #input
             placeholder="CPF"
             name="cpf"
             id="sale-cpf"
             [(ngModel)]="sale.client.cpf"
           />
+          <mat-hint align="end">{{ input.value?.length || 0 }}/11</mat-hint>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Valor Pago</mat-label>
