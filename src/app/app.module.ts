@@ -31,6 +31,7 @@ import { ClientAddComponent } from './pages/clients/client-add/client-add.compon
 import { ClientDetailComponent } from './pages/clients/client-detail/client-detail.component';
 import { SalesComponent } from './pages/sales/sales.component';
 import { SaleAddComponent } from './pages/sales/sale-add/sale-add.component';
+import { SalePdfComponent } from './pages/sales/sale-pdf/sale-pdf.component';
 import { SaleDetailComponent } from './pages/sales/sale-detail/sale-detail.component';
 
 export function appInitializerFactory(authService: AuthService) {
@@ -69,6 +70,7 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     ClientDetailComponent,
     SalesComponent,
     SaleAddComponent,
+    SalePdfComponent,
     SaleDetailComponent,
   ],
   providers: [

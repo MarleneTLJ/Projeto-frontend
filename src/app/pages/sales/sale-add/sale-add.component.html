@@ -1,17 +1,21 @@
 <div class="container">
-  <form class="form-content" [formGroup]="saleForm">
-    <mat-card class="mat-elevation-z0 outlined-card">
-      <mat-card-title class="card-header">
-        Não esqueça de verificar 2x antes de registrar a venda!
-      </mat-card-title>
-      <!-- INÍCIO: Form de cadastro -->
-      <div class="alert alert-danger" *ngIf="error">
-        <p>{{ error }}</p>
-      </div>
-      <mat-card-content>
-        <div class="card-content" formGroupName="clientForm">
+  <mat-card>
+    <mat-card-title class="card-header">
+      Nenhuma venda deve ser feita "de graça". Temos contas a pagar.
+    </mat-card-title>
+    <!-- INÍCIO: Form de cadastro -->
+    <form [formGroup]="saleForm">
+      <mat-card class="mat-elevation-z0 outlined-card" style="margin-bottom: 1rem;">
+        <div class="alert alert-danger" *ngIf="error">
+          <p>{{ error }}</p>
+        </div>
+        <mat-card-content class="card-content" formGroupName="clientForm">
           <!-- INÍCIO: Nome -->
-          <mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            matAutocompleteOrigin
+            #origin="matAutocompleteOrigin"
+          >
             <mat-label>Nome</mat-label>
             <input
               matInput
@@ -19,9 +23,22 @@
               maxlength="50"
               placeholder="Nome"
               formControlName="name"
+              [matAutocomplete]="auto"
+              [matAutocompleteConnectedTo]="origin"
               name="name"
-              required
             />
+            <mat-autocomplete
+              autoActiveFirstOption
+              #auto="matAutocomplete"
+              (optionSelected)="setFormData($event)"
+            >
+              <mat-option
+                *ngFor="let client of filteredClients$ | async"
+                [value]="client"
+              >
+                {{ client.name }} {{ client.surname }} | CPF: {{ client.cpf }}
+              </mat-option>
+            </mat-autocomplete>
             <mat-error>
               <div *ngIf="name.invalid">
                 <div *ngIf="name.errors?.['required']">Nome é obrigatório</div>
@@ -36,7 +53,7 @@
           </mat-form-field>
           <!-- FIM: Nome -->
           <!-- INÍCIO: Sobrenome -->
-          <mat-form-field>
+          <mat-form-field appearance="outline" *ngIf="surname.valid">
             <mat-label>Sobrenome</mat-label>
             <input
               matInput
@@ -44,8 +61,9 @@
               maxlength="255"
               placeholder="Sobrenome"
               formControlName="surname"
+              [matAutocomplete]="auto"
+              [matAutocompleteConnectedTo]="origin"
               name="surname"
-              required
             />
             <mat-error>
               <div *ngIf="surname.invalid">
@@ -63,14 +81,15 @@
           </mat-form-field>
           <!-- FIM: Sobrenome -->
           <!-- INÍCIO: Email -->
-          <mat-form-field>
+          <mat-form-field appearance="outline" *ngIf="email.valid">
             <mat-label>E-mail</mat-label>
             <input
               matInput
               formControlName="email"
+              [matAutocomplete]="auto"
+              [matAutocompleteConnectedTo]="origin"
               placeholder="E-mail"
               name="email"
-              required
             />
             <mat-error *ngIf="email.invalid && email.hasError('email')">
               Digite um e-mail válido
@@ -80,111 +99,49 @@
           <!-- INÍCIO: CPF -->
           <mat-form-field
             [hintLabel]="cpf.invalid ? 'Digite apenas números' : ' '"
+            appearance="outline"
+            *ngIf="cpf.valid"
           >
             <mat-label>CPF</mat-label>
             <input
-              type="text"
               matInput
+              #input
+              type="number"
               maxlength="11"
               formControlName="cpf"
+              [matAutocomplete]="auto"
+              [matAutocompleteConnectedTo]="origin"
               placeholder="CPF"
               name="cpf"
-              required
             />
+            <mat-hint align="end">{{ input.value?.length || 0 }}/11</mat-hint>
             <mat-error>
               <div *ngIf="cpf.invalid">
                 <div *ngIf="cpf.errors?.['required']">CPF é obrigatório</div>
-                <div *ngIf="cpf.errors?.['cpfInvalido']">
-                  Digite um CPF válido
-                </div>
               </div>
             </mat-error>
           </mat-form-field>
           <!-- FIM: CPF -->
-        </div>
-        <!-- INÍCIO: Valor Pago -->
-        <mat-form-field>
-          <mat-label>Valor Pago</mat-label>
-          <input
-            matInput
-            placeholder="Valor Pago"
-            formControlName="value_paid"
-            name="value_paid"
-            type="number"
-            required
-          />
-          <mat-error>
-            <div *ngIf="value_paid.invalid">
-              <div *ngIf="value_paid.errors?.['required']">
-                Valor Pago é obrigatório
-              </div>
-            </div>
-          </mat-error>
-        </mat-form-field>
-        <!-- FIM: Valor Pago -->
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-stroked-button color="primary" (click)="addCourse()">
-          Add curso
-        </button>
-      </mat-card-actions>
-    </mat-card>
-    <mat-card class="mat-elevation-z0 outlined-card" formArrayName="courses">
-      <div
-        class="card-content"
-        *ngFor="let course of courses.controls; let i = index"
-      >
-        <div [formGroupName]="i">
-          <!-- INÍCIO: Título -->
-          <mat-form-field>
-            <mat-label>Título</mat-label>
-            <input
-              matInput
-              minlength="3"
-              maxlength="255"
-              placeholder="Título"
-              formControlName="title"
-              name="title"
-              required
-            />
-            <mat-error>
-              <div *ngIf="title.invalid">
-                <div *ngIf="title.errors?.['required']">
-                  Título é obrigatório
-                </div>
-                <div *ngIf="title.errors?.['minlength']">
-                  Título deve ter no mínimo 3 caracteres
-                </div>
-                <div *ngIf="title.errors?.['maxlength']">
-                  Título deve ter no máximo 255 caracteres
-                </div>
-              </div>
-            </mat-error>
-          </mat-form-field>
-          <!-- FIM: Título -->
-          <!-- INÍCIO: Carga Horária -->
-          <mat-form-field>
-            <mat-label>Carga Horária</mat-label>
-            <input
-              matInput
-              placeholder="Carga Horária"
-              formControlName="workload"
-              name="workload"
-              type="number"
-              required
-            />
-            <mat-error>
-              <div *ngIf="workload.invalid">
-                <div *ngIf="workload.errors?.['required']">
-                  Carga Horária é obrigatório
-                </div>
-              </div>
-            </mat-error>
-          </mat-form-field>
-          <!-- FIM: Carga Horária -->
-          <!-- INÍCIO: Preço -->
-          <mat-form-field>
-            <mat-label>Preço</mat-label>
+        </mat-card-content>
+      </mat-card>
+      <!-- INÍCIO: Cursos -->
+      <mat-card class="mat-elevation-z0 outlined-card">
+        <h3 style="text-align: center; font-weight: bold">
+          Escolha os cursos que o cliente irá cursar
+        </h3>
+        <mat-card-content>
+          <div
+            formArrayName="courseArray"
+            *ngFor="let array of courseArray.controls; let i = index"
+            class="checkboxes"
+          >
+            <mat-checkbox [formControlName]="i" (change)="checkValue()">
+              {{ courses[i].title }}
+            </mat-checkbox>
+          </div>
+          <!-- INÍCIO: Valor Pago -->
+          <mat-form-field class="value-paid">
+            <mat-label>Valor Pago</mat-label>
             <input
               matInput
               currencyMask
@@ -194,55 +151,28 @@
                 decimal: ',',
                 align: 'left'
               }"
-              placeholder="Preço"
-              formControlName="price"
-              name="price"
-              required
+              placeholder="Valor Pago"
+              formControlName="value_paid"
+              name="value_paid"
             />
-            <mat-error>
-              <div *ngIf="price.invalid">
-                <div *ngIf="price.errors?.['required']">
-                  Preço é obrigatório
-                </div>
-              </div>
-            </mat-error>
           </mat-form-field>
-          <!-- FIM: Preço -->
-          <!-- INÍCIO: Descrição -->
-          <mat-form-field>
-            <mat-label>Descrição</mat-label>
-            <textarea
-              matInput
-              rows="8"
-              cols="30"
-              placeholder="Descrição"
-              formControlName="description"
-              name="description"
-              required
-            ></textarea>
-            <mat-error>
-              <div *ngIf="description.invalid">
-                <div *ngIf="description.errors?.['required']">
-                  Descrição é obrigatório
-                </div>
-              </div>
-            </mat-error>
-          </mat-form-field>
-          <!-- FIM: Descrição -->
-        </div>
-      </div>
-    </mat-card>
+          <!-- FIM: Valor Pago -->
+        </mat-card-content>
+      </mat-card>
+      <!-- FIM: Cursos -->
+    </form>
+    <!-- FIM: Form de cadastro -->
     <mat-card-actions>
-      <a class="spacing" mat-stroked-button (click)="goBack()">Voltar</a>
+      <a class="spacing" mat-button routerLink="/sales">Voltar</a>
       <button
         class="spacing"
         mat-flat-button
         color="primary"
+        [disabled]="saleForm.invalid || total === 0"
         (click)="addSale()"
       >
         Salvar
       </button>
     </mat-card-actions>
-  </form>
-  <!-- FIM: Form de cadastro -->
+  </mat-card>
 </div>

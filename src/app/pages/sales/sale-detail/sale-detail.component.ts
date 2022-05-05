@@ -1,12 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Sale } from 'src/app/shared/interfaces';
-import { SaleService } from '../../../shared/services';
+import { SaleService } from 'src/app/shared/services';
+import { CourseService } from 'src/app/shared/services';
+import { Course } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-sale-detail',
@@ -14,40 +12,59 @@ import { SaleService } from '../../../shared/services';
   styleUrls: ['./sale-detail.component.scss'],
 })
 export class SaleDetailComponent implements OnInit {
-  sale: Sale | undefined;
-
-  @ViewChild('salepdf') salepdf!: ElementRef;
+  sale!: Sale;
+  courses: Course[] = [];
+  total: number = 0;
 
   constructor(
-    private saleService: SaleService,
     private route: ActivatedRoute,
-    private location: Location
+    private router: Router,
+    private saleService: SaleService,
+    private courseService: CourseService
   ) {}
 
   ngOnInit(): void {
+    this.getCourses();
     this.getSale();
   }
 
+  // Pega os dados da compra pelo id
   getSale(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
 
     this.saleService.getSale(id).subscribe((sale) => (this.sale = sale));
   }
 
-  goBack(): void {
-    this.location.back();
+  // Pega todos os cursos
+  getCourses(): void {
+    this.courseService
+      .getCourses()
+      .subscribe((courses) => (this.courses = courses));
   }
 
-  makePdf(): void {
-    let DATA: any = document.getElementById('salepdf');
-    html2canvas(DATA).then((canvas) => {
-      let fileWidth = 150;
-      let fileHeigth = (canvas.height * fileWidth) / canvas.width;
-      const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
-      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeigth);
-      PDF.save('comprovante.pdf');
-    });
+  // Remove um curso do array
+  remove(item: any) {
+    let index = this.sale.courses.indexOf(item);
+
+    this.sale.courses.splice(index, 1);
+
+    // Diminui o valor pago automaticamente através do preço do curso removido
+    this.sale.value_paid -= item.price;
+  }
+
+  // Adiciona um curso no array de cursos da compra
+  add(item: any) {
+    this.sale.courses.push(item);
+
+    // Acrescenta o valor pago automaticamente através do preço do curso adicionado
+    this.sale.value_paid += item.price;
+  }
+
+  saveSale(): void {
+    if (this.sale) {
+      this.saleService
+        .updateSale(this.sale)
+        .subscribe(() => this.router.navigate(['/sales']));
+    }
   }
 }

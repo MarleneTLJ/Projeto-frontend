@@ -5,15 +5,18 @@ import {
   FormArray,
   FormBuilder,
   FormGroup,
+  FormControl,
 } from '@angular/forms';
-import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { distinctUntilChanged, map, Observable, startWith } from 'rxjs';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { SaleService } from 'src/app/shared/services';
-import { Validacoes } from '../../clients/client-add/validacoes.component';
+import { CourseService } from 'src/app/shared/services';
+import { ClientService } from 'src/app/shared/services';
+import { Client, Course } from 'src/app/shared/interfaces';
 import { DialogInfoSucesso } from 'src/app/dialogs/dialog-info/dialog-info.component';
-import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-sale-add',
@@ -23,16 +26,24 @@ import { distinctUntilChanged } from 'rxjs';
 export class SaleAddComponent implements OnInit {
   error: string | null = null;
   saleForm!: FormGroup;
+  courses: Course[] = [];
+  clients: Client[] = [];
+  filteredClients$!: Observable<Client[]>;
+  total: number = 0;
 
   constructor(
     private saleService: SaleService,
-    private location: Location,
+    private courseService: CourseService,
+    private clientService: ClientService,
     public dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.getCourses();
+    this.getClients();
+
     this.saleForm = this.fb.group({
       clientForm: this.fb.group({
         name: [
@@ -52,48 +63,82 @@ export class SaleAddComponent implements OnInit {
           ],
         ],
         email: ['', [Validators.required, Validators.email]],
-        cpf: [
-          '',
-          Validators.compose([Validators.required, Validacoes.ValidaCpf]),
-        ],
+        cpf: ['', [Validators.required, Validators.maxLength(11)]],
       }),
-      courses: this.fb.array([]),
+      courseArray: this.fb.array([], [Validators.required]),
       value_paid: ['', Validators.required],
     });
 
-    // this.saleForm.statusChanges.subscribe((status) => console.log(status));
-
-
-
-    // this.saleForm
-    //   .get('clientForm.name')
-    //   ?.valueChanges.pipe(
-    //     distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
-    //   )
-    //   .subscribe(async (value) => {
-    //     console.log('firstname value changed');
-    //     console.log(value);
-    //   });
+    this.filteredClients$ = this.clientForm.get('name')!.valueChanges.pipe(
+      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+      startWith(''),
+      map((value) => (typeof value === 'string' ? value : value.name)),
+      map((value) => (value ? this._filter(value) : this.clients.slice()))
+    );
   }
 
-  courseForm(): FormGroup {
-    return this.fb.group({
-      title: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(255),
-        ],
-      ],
-      workload: ['', [Validators.required]],
-      price: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+  // Pega todos os clientes
+  getClients(): void {
+    this.clientService
+      .getClients()
+      .subscribe((clients) => (this.clients = clients));
+  }
+
+  // Filtro para procurar os clientes pelo nome ou cpf
+  private _filter(value: string): Client[] {
+    const filterName = value.toLowerCase();
+    const filterCpf = value.toString().toLowerCase();
+
+    return this.clients.filter(
+      (option) =>
+        option.name.toLowerCase().includes(filterName) ||
+        option.cpf.toString().toLowerCase().includes(filterCpf)
+    );
+  }
+
+  // Adiciona o cliente automaticamente no resto do form
+  setFormData(event: MatAutocompleteSelectedEvent) {
+    let client = event.option.value;
+    // Se existir o cliente, ele adiciona ele no form
+    if (client) {
+      this.clientForm.get('name')!.setValue(client.name, { emitEvent: false });
+      this.clientForm
+        .get('surname')!
+        .setValue(client.surname, { emitEvent: false });
+      this.clientForm
+        .get('email')!
+        .setValue(client.email, { emitEvent: false });
+      this.clientForm.get('cpf')!.setValue(client.cpf, { emitEvent: false });
+    }
+  }
+
+  checkValue() {
+    // Pega os preços quando clica no checkbox
+    const selectedCourse = this.courseArray.value
+      .map((checked: any, i: any) => (checked ? this.courses[i].price : null))
+      .filter((v: any) => v !== null);
+
+    // Soma os preços colocando na variável de total
+    this.total = selectedCourse.reduce((acc: any, curr: any) => {
+      return acc + curr;
+    }, 0);
+
+    // Atualiza automaticamente o input de valor pago através do form
+    this.saleForm.patchValue({
+      value_paid: this.total,
     });
   }
 
-  addCourse() {
-    this.courses.push(this.courseForm());
+  // Função para colocar o curso no array ao clicar no checkbox
+  addCheckboxes() {
+    this.courses.forEach(() => this.courseArray.push(new FormControl(false)));
+  }
+
+  // Pega todos os cursos e os coloca em um checkbox
+  getCourses(): void {
+    this.courseService.getCourses().subscribe((courses) => {
+      (this.courses = courses), this.addCheckboxes();
+    });
   }
 
   get name(): AbstractControl {
@@ -116,36 +161,12 @@ export class SaleAddComponent implements OnInit {
     return this.saleForm.get('clientForm')!;
   }
 
-  get courses() {
-    return this.saleForm.get('courses') as FormArray;
-  }
-
-  get title(): AbstractControl {
-    return this.courseForm().get('title')!;
-  }
-
-  get workload(): AbstractControl {
-    return this.courseForm().get('workload')!;
-  }
-
-  get price(): AbstractControl {
-    return this.courseForm().get('price')!;
-  }
-
-  get description(): AbstractControl {
-    return this.courseForm().get('description')!;
-  }
-
-  get coursesForm(): AbstractControl {
-    return this.courseForm().get('coursesForm')!;
+  get courseArray() {
+    return this.saleForm.get('courseArray') as FormArray;
   }
 
   get value_paid(): AbstractControl {
     return this.saleForm.get('value_paid')!;
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
   openDialog() {
@@ -157,12 +178,16 @@ export class SaleAddComponent implements OnInit {
   // Adiciona uma compra
   addSale(): void {
     // Se estiver incorreto os dados que o usuário inseriu, ele retorna nada
-    if (this.saleForm.invalid) {
+    if (this.saleForm.invalid || this.total === 0) {
       return;
     }
 
+    const selectedCourse = this.courseArray.value
+      .map((checked: any, i: any) => (checked ? this.courses[i] : null))
+      .filter((v: any) => v !== null);
+
     this.saleService
-      .addSale(this.clientForm.value, this.courses.value, this.value_paid.value)
+      .addSale(this.clientForm.value, selectedCourse, this.value_paid.value)
       .subscribe({
         next: () => {
           this.openDialog();

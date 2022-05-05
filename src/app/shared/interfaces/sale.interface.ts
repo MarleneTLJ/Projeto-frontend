@@ -11,7 +11,7 @@ export interface Sale {
       _id: string;
       title: string;
       workload: number;
-      price: string;
+      price: number;
       description: string;
     }
   ];

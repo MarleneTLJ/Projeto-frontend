@@ -1,0 +1,31 @@
+<div class="container" *ngIf="sale">
+  <div class="cards">
+    <mat-card class="mat-elevation-z0 outlined-card">
+      <div id="salepdf">
+        <mat-card-title>ID da compra: {{ sale._id }}</mat-card-title>
+        <mat-card-content>
+          <p><strong>Nome do cliente:</strong> {{ sale.client.name }}</p>
+          <p><strong>Sobrenome do cliente:</strong> {{ sale.client.surname }}</p>
+          <p><strong>E-mail:</strong> {{ sale.client.email }}</p>
+          <p><strong>CPF:</strong> {{ sale.client.cpf }}</p>
+          <mat-card
+            class="mat-elevation-z0 outlined-card"
+            *ngFor="let course of sale.courses"
+          >
+            <h2>Curso: {{ course.title}}</h2>
+            <mat-card-content>
+              <p><strong>Carga Horária:</strong> {{ course.workload }}</p>
+              <p><strong>Preço:</strong> {{ course.price }}</p>
+              <p><strong>Descrição:</strong> {{ course.description }}</p>
+            </mat-card-content>
+          </mat-card>
+          <p><strong>Valor pago:</strong> {{ sale.value_paid }}</p>
+        </mat-card-content>
+      </div>
+      <mat-card-actions>
+        <a class="spacing" mat-raised-button (click)="goBack()">Voltar</a>
+        <a mat-raised-button color="accent" class="spacing" (click)="makePdf()">Gerar!</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

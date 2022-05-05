@@ -1,31 +1,111 @@
 <div class="container" *ngIf="sale">
-  <div class="cards">
-    <mat-card class="mat-elevation-z0 outlined-card">
-      <div id="salepdf">
-        <mat-card-title>ID da compra: {{ sale._id }}</mat-card-title>
-        <mat-card-content>
-          <p><strong>Nome do cliente:</strong> {{ sale.client.name }}</p>
-          <p><strong>Sobrenome do cliente:</strong> {{ sale.client.surname }}</p>
-          <p><strong>E-mail:</strong> {{ sale.client.email }}</p>
-          <p><strong>CPF:</strong> {{ sale.client.cpf }}</p>
-          <mat-card
-            class="mat-elevation-z0 outlined-card"
-            *ngFor="let course of sale.courses"
-          >
-            <h2>Curso: {{ course.title}}</h2>
-            <mat-card-content>
+  <mat-card class="mat-elevation-z0 outlined-card">
+    <form>
+      <mat-card-content class="card-content">
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            placeholder="Nome"
+            name="name"
+            id="sale-name"
+            [(ngModel)]="sale.client.name"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="sale-surname">Sobrenome</mat-label>
+          <input
+            matInput
+            placeholder="Sobrenome"
+            name="surname"
+            id="sale-surname"
+            [(ngModel)]="sale.client.surname"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="sale-email">E-mail</mat-label>
+          <input
+            matInput
+            placeholder="E-mail"
+            name="email"
+            id="sale-email"
+            [(ngModel)]="sale.client.email"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="sale-cpf">CPF</mat-label>
+          <input
+            matInput
+            maxlength="11"
+            #input
+            placeholder="CPF"
+            name="cpf"
+            id="sale-cpf"
+            [(ngModel)]="sale.client.cpf"
+          />
+          <mat-hint align="end">{{ input.value?.length || 0 }}/11</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Valor Pago</mat-label>
+          <input
+            matInput
+            currencyMask
+            [options]="{
+              prefix: 'R$ ',
+              thousands: '.',
+              decimal: ',',
+              align: 'left'
+            }"
+            placeholder="Valor Pago"
+            name="value_paid"
+            [(ngModel)]="sale.value_paid"
+          />
+        </mat-form-field>
+        <!-- INÍCIO: Cursos do cliente -->
+        <mat-accordion *ngFor="let course of sale.courses">
+          <mat-expansion-panel class="mat-elevation-z0 outlined-card">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span><strong>Curso:</strong> {{ course.title }}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
               <p><strong>Carga Horária:</strong> {{ course.workload }}</p>
-              <p><strong>Preço:</strong> {{ course.price }}</p>
+              <p><strong>Preço:</strong> R$ {{ course.price }}</p>
               <p><strong>Descrição:</strong> {{ course.description }}</p>
-            </mat-card-content>
-          </mat-card>
-          <p><strong>Valor pago:</strong> {{ sale.value_paid }}</p>
+            </div>
+            <button mat-flat-button color="warn" (click)="remove(course)">
+              Excluir
+            </button>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!-- FIM: Cursos do cliente -->
+      </mat-card-content>
+      <!-- INÍCIO: Adicionar cursos -->
+      <mat-card class="mat-elevation-z0 outlined-card">
+        <h3 style="text-align: center; font-weight: bold">
+          Adicione o curso que você esqueceu de adicionar (ou não)
+        </h3>
+        <mat-card-content>
+          <div *ngFor="let course of courses; let i = index">
+            <button mat-icon-button (click)="add(course)">
+              <mat-icon color="primary">add</mat-icon> {{ course.title }}
+            </button>
+          </div>
         </mat-card-content>
-      </div>
+      </mat-card>
+      <!-- FIM: Adicionar cursos -->
       <mat-card-actions>
-        <a class="spacing" mat-raised-button (click)="goBack()">Voltar</a>
-        <a mat-raised-button color="accent" class="spacing" (click)="makePdf()">Gerar!</a>
+        <a class="spacing" mat-flat-button routerLink="/sales">Voltar</a>
+        <button
+          class="spacing"
+          mat-flat-button
+          color="primary"
+          (click)="saveSale()"
+        >
+          Salvar
+        </button>
       </mat-card-actions>
-    </mat-card>
-  </div>
+    </form>
+  </mat-card>
 </div>

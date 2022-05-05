@@ -14,17 +14,16 @@
         </a>
       </div>
       <div class="cards">
-        <mat-card class="mat-elevation-z0 outlined-card" *ngFor="let sale of sales">
-          <mat-card-title>ID: {{ sale._id }} 
-            <span>
-              <button class="mat-elevation-z0" mat-mini-fab color="warn" (click)="openDialog(sale)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </span>
-          </mat-card-title>
+        <mat-card
+          class="mat-elevation-z0 outlined-card"
+          *ngFor="let sale of sales"
+        >
+          <mat-card-title>ID: {{ sale._id }} </mat-card-title>
           <mat-card-content>
             <p><strong>Nome do cliente:</strong> {{ sale.client.name }}</p>
-            <p><strong>Sobrenome do cliente:</strong> {{ sale.client.surname }}</p>
+            <p>
+              <strong>Sobrenome do cliente:</strong> {{ sale.client.surname }}
+            </p>
             <p><strong>E-mail:</strong> {{ sale.client.email }}</p>
             <p><strong>CPF:</strong> {{ sale.client.cpf }}</p>
             <mat-accordion *ngFor="let course of sale.courses">
@@ -41,16 +40,31 @@
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
-            <p><strong>Valor pago:</strong> {{ sale.value_paid }}</p>
+            <p><strong>Valor pago:</strong> R$ {{ sale.value_paid }}</p>
           </mat-card-content>
           <mat-card-actions>
             <a
-                mat-raised-button
-                color="primary"
-                class="spacing"
-                routerLink="/sale-detail/{{ sale._id }}"
-                >Gerar PDF</a
-              >
+              mat-flat-button
+              color="primary"
+              class="spacing"
+              routerLink="/sale-detail/{{ sale._id }}"
+              >Editar</a
+            >
+            <a
+              mat-flat-button
+              color="accent"
+              class="spacing"
+              routerLink="/sale-pdf/{{ sale._id }}"
+              >Gerar PDF</a
+            >
+            <button
+              mat-flat-button
+              color="warn"
+              class="spacing"
+              (click)="openDialog(sale)"
+            >
+              Excluir
+            </button>
           </mat-card-actions>
         </mat-card>
       </div>

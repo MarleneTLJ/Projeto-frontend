@@ -24,7 +24,6 @@ export class ClientsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogInfoConf);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
       if (result) {
         this.deleteClient(client);
       }

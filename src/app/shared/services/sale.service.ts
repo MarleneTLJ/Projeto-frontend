@@ -75,6 +75,15 @@ export class SaleService {
       .pipe(catchError(this.handleError));
   }
 
+  // Atualiza uma compra
+  updateSale(sale: Sale): Observable<any> {
+    const url = `http://localhost:3000/api/sales/${sale._id}`;
+
+    return this.http
+      .put(url, sale, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   // Deleta uma compra
   deleteSale(id: string): Observable<Sale> {
     const url = `http://localhost:3000/api/sales/${id}`;

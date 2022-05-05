@@ -1,8 +1,6 @@
 .container {
-  max-width: 85rem;
   min-height: 45rem;
   margin: 8rem auto;
-  font-size: 1.6rem;
 
   @media only screen and (max-width: 75em) {
     .container {
@@ -18,20 +16,38 @@
   }
 }
 
-.card-header {
-  text-align: center;
-  margin: 2rem;
+.info {
+  display: flex;
+  justify-content: center;
+
+  &__titulo {
+    font-size: 2.4rem;
+    font-weight: 500;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    text-align: center;
+  }
 }
 
-.card-content {
+.cards {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-wrap: wrap;
+
+  @media only screen and (max-width: 56.25em) {
+    flex-direction: column;
+  }
+
+  @media only screen and (max-width: 37.5em) {
+    flex-direction: column;
+  }
 }
 
-mat-form-field {
-  width: 70%;
+div {
+  max-width: 60rem;
+  margin: 1rem;
 }
 
 mat-card-actions {
@@ -44,16 +60,10 @@ mat-card-actions {
   margin-right: 0.4rem;
 }
 
-.value-paid {
-  width: 20%;
-  margin-top: 2rem;
+p {
+  font-size: 1.6rem;
 }
 
 mat-accordion {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: .5rem;
-  width: 70%;
+  margin-right: 0.1rem;
 }

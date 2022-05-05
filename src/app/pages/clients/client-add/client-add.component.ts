@@ -5,6 +5,7 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -20,7 +21,7 @@ import { DialogInfoSucesso } from 'src/app/dialogs/dialog-info/dialog-info.compo
 export class ClientAddComponent {
   error: string | null = null;
 
-  constructor(private clientService: ClientService, private location: Location, public dialog: MatDialog) {}
+  constructor(private clientService: ClientService, private location: Location, public dialog: MatDialog, private router: Router,) {}
 
   clientForm = new FormGroup({
     name: new FormControl('', [
@@ -36,7 +37,7 @@ export class ClientAddComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     cpf: new FormControl(
       '',
-      Validators.compose([Validators.required, Validacoes.ValidaCpf])
+      ([Validators.required, Validacoes.ValidaCpf])
     ),
   });
 
@@ -54,10 +55,6 @@ export class ClientAddComponent {
 
   get cpf(): AbstractControl {
     return this.clientForm.get('cpf')!;
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
   openDialog() {
@@ -80,7 +77,7 @@ export class ClientAddComponent {
       .subscribe({
         next: () => {
           this.openDialog();
-          this.goBack();
+          this.router.navigate(['/clients']);
         },
         // Pega o erro para jogar na tela
         error: () => {
