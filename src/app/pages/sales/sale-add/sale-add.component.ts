@@ -9,14 +9,14 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { distinctUntilChanged, map, Observable, startWith } from 'rxjs';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 import { SaleService } from 'src/app/shared/services';
 import { CourseService } from 'src/app/shared/services';
 import { ClientService } from 'src/app/shared/services';
 import { Client, Course } from 'src/app/shared/interfaces';
 import { DialogInfoSucesso } from 'src/app/dialogs/dialog-info/dialog-info.component';
-import { distinctUntilChanged, map, Observable, startWith } from 'rxjs';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-sale-add',
@@ -29,7 +29,6 @@ export class SaleAddComponent implements OnInit {
   courses: Course[] = [];
   clients: Client[] = [];
   filteredClients$!: Observable<Client[]>;
-  isLoading = false;
   total: number = 0;
 
   constructor(
@@ -74,7 +73,7 @@ export class SaleAddComponent implements OnInit {
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
       startWith(''),
       map((value) => (typeof value === 'string' ? value : value.name)),
-      map((name) => (name ? this._filter(name) : this.clients.slice()))
+      map((value) => (value ? this._filter(value) : this.clients.slice()))
     );
   }
 
@@ -85,16 +84,22 @@ export class SaleAddComponent implements OnInit {
       .subscribe((clients) => (this.clients = clients));
   }
 
-  private _filter(name: string): Client[] {
-    const filterValue = name.toLowerCase();
+  // Filtro para procurar os clientes pelo nome ou cpf
+  private _filter(value: string): Client[] {
+    const filterName = value.toLowerCase();
+    const filterCpf = value.toString().toLowerCase();
 
-    return this.clients.filter((option) =>
-      option.name.toLowerCase().includes(filterValue)
+    return this.clients.filter(
+      (option) =>
+        option.name.toLowerCase().includes(filterName) ||
+        option.cpf.toString().toLowerCase().includes(filterCpf)
     );
   }
 
+  // Adiciona o cliente automaticamente no resto do form
   setFormData(event: MatAutocompleteSelectedEvent) {
     let client = event.option.value;
+    // Se existir o cliente, ele adiciona ele no form
     if (client) {
       this.clientForm.get('name')!.setValue(client.name, { emitEvent: false });
       this.clientForm
@@ -122,8 +127,6 @@ export class SaleAddComponent implements OnInit {
     this.saleForm.patchValue({
       value_paid: this.total,
     });
-
-    console.log(selectedCourse);
   }
 
   // Função para colocar o curso no array ao clicar no checkbox

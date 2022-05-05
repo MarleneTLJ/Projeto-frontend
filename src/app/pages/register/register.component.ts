@@ -83,9 +83,7 @@ export class RegisterComponent {
   openDialog() {
     const dialogRef = this.dialog.open(DialogInfoSucesso);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   register(): void {

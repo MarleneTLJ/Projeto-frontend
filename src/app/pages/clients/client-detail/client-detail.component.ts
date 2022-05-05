@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client } from 'src/app/shared/interfaces';
 import { ClientService } from 'src/app/shared/services';
@@ -15,8 +14,8 @@ export class ClientDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private clientService: ClientService,
-    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -31,15 +30,11 @@ export class ClientDetailComponent implements OnInit {
       .subscribe((client) => (this.client = client));
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
   saveClient(): void {
     if (this.client) {
       this.clientService
         .updateClient(this.client)
-        .subscribe(() => this.goBack());
+        .subscribe(() => this.router.navigate(['/clients']));
     }
   }
 

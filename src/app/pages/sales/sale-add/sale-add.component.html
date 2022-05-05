@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-title class="card-header">
-      Não esqueça de verificar 2x antes de registrar a venda!
+      Nenhuma venda deve ser feita "de graça". Temos contas a pagar.
     </mat-card-title>
     <!-- INÍCIO: Form de cadastro -->
     <form [formGroup]="saleForm">
@@ -28,6 +28,7 @@
               name="name"
             />
             <mat-autocomplete
+              autoActiveFirstOption
               #auto="matAutocomplete"
               (optionSelected)="setFormData($event)"
             >
@@ -123,6 +124,7 @@
           <!-- FIM: CPF -->
         </mat-card-content>
       </mat-card>
+      <!-- INÍCIO: Cursos -->
       <mat-card class="mat-elevation-z0 outlined-card">
         <h3 style="text-align: center; font-weight: bold">
           Escolha os cursos que o cliente irá cursar
@@ -157,6 +159,7 @@
           <!-- FIM: Valor Pago -->
         </mat-card-content>
       </mat-card>
+      <!-- FIM: Cursos -->
     </form>
     <!-- FIM: Form de cadastro -->
     <mat-card-actions>

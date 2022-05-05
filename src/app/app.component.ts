@@ -30,50 +30,50 @@ export class AppComponent {
     private idle: Idle,
     private keepalive: Keepalive
   ) {
-    // Coloca um idle timout de 10 minutos
-    idle.setIdle(600);
-    // Coloca um período de timout de 10 segundos, e após isso, o usuário é deslogado automaticamente
-    idle.setTimeout(10);
-    // Coloca sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
-    idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+    // // Coloca um idle timout de 10 minutos
+    // idle.setIdle(600);
+    // // Coloca um período de timout de 10 segundos, e após isso, o usuário é deslogado automaticamente
+    // idle.setTimeout(10);
+    // // Coloca sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+    // idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
-    idle.onIdleEnd.subscribe(() => {
-      this.idleState = 'No longer idle.';
-      console.log(this.idleState);
-      this.reset();
-    });
+    // idle.onIdleEnd.subscribe(() => {
+    //   this.idleState = 'No longer idle.';
+    //   console.log(this.idleState);
+    //   this.reset();
+    // });
 
-    idle.onTimeout.subscribe(() => {
-      this.idleState = 'Timed out!';
-      this.timedOut = true;
-      console.log(this.idleState);
-      this.authService.signOut();
-      this.router.navigate(['']);
-    });
+    // idle.onTimeout.subscribe(() => {
+    //   this.idleState = 'Timed out!';
+    //   this.timedOut = true;
+    //   console.log(this.idleState);
+    //   this.authService.signOut();
+    //   this.router.navigate(['']);
+    // });
 
-    idle.onIdleStart.subscribe(() => {
-      this.idleState = "You've gone idle!";
-      console.log(this.idleState);
-    });
+    // idle.onIdleStart.subscribe(() => {
+    //   this.idleState = "You've gone idle!";
+    //   console.log(this.idleState);
+    // });
 
-    idle.onTimeoutWarning.subscribe((countdown) => {
-      this.idleState = 'You will time out in ' + countdown + ' seconds!';
-      console.log(this.idleState);
-    });
+    // idle.onTimeoutWarning.subscribe((countdown) => {
+    //   this.idleState = 'You will time out in ' + countdown + ' seconds!';
+    //   console.log(this.idleState);
+    // });
 
-    // Coloca o ping em um intervalo de ?? minutos
-    keepalive.interval(60);
+    // // Coloca o ping em um intervalo de ?? minutos
+    // keepalive.interval(60);
 
-    keepalive.onPing.subscribe(() => (this.lastPing = new Date()));
+    // keepalive.onPing.subscribe(() => (this.lastPing = new Date()));
 
-    this.authService.getUser().subscribe((userLoggedIn) => {
-      if (userLoggedIn) {
-        idle.watch();
-        this.timedOut = false;
-      } else {
-        idle.stop();
-      }
-    });
+    // this.authService.getUser().subscribe((userLoggedIn) => {
+    //   if (userLoggedIn) {
+    //     idle.watch();
+    //     this.timedOut = false;
+    //   } else {
+    //     idle.stop();
+    //   }
+    // });
   }
 
   reset() {

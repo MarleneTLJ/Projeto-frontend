@@ -1,5 +1,5 @@
 .container {
-  max-width: 55rem;
+  max-width: 85rem;
   min-height: 45rem;
   margin: 8rem auto;
   font-size: 1.6rem;
@@ -44,16 +44,16 @@ mat-card-actions {
   margin-right: 0.4rem;
 }
 
-.is-loading ::ng-deep .mat-option-text {
+.value-paid {
+  width: 20%;
+  margin-top: 2rem;
+}
+
+mat-accordion {
   display: flex;
   justify-content: center;
-}
-
-.checkboxes {
-  margin: .5rem;
-}
-
-.value-paid {
-  width: 25%;
-  margin-top: 2rem;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: .5rem;
+  width: 70%;
 }
