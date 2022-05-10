@@ -20,3 +20,13 @@ export class DialogInfoConf {
   constructor() { }
 
 }
+
+@Component({
+  templateUrl: './dialog-rota-invalida.component.html',
+  styleUrls: ['./dialog-info.component.scss']
+})
+export class DialogRotaInvalida {
+
+  constructor() { }
+
+}

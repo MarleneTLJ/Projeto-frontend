@@ -9,16 +9,21 @@ import { Sale } from '../interfaces';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TokenStorage } from 'src/app/shared/services/auth/token.storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaleService {
+  token: string | null = this.tokenStorage.getToken() || '';
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'auth-token': this.token!,
+    }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -38,10 +43,20 @@ export class SaleService {
     );
   }
 
+  getToken() {
+    const token: string | null = this.tokenStorage.getToken() || '';
+    const headers = new HttpHeaders({
+      'auth-token': token,
+    });
+    return headers;
+  }
+
   // Pega todos as compras
   getSales(): Observable<Sale[]> {
     return this.http
-      .get<Sale[]>('http://localhost:3000/api/sales')
+      .get<Sale[]>('http://localhost:3000/api/sales', {
+        headers: this.getToken(),
+      })
       .pipe(catchError(this.handleError));
   }
 
@@ -49,7 +64,9 @@ export class SaleService {
   getSale(id: string): Observable<Sale> {
     const url = `http://localhost:3000/api/sales/${id}`;
 
-    return this.http.get<Sale>(url).pipe(catchError(this.handleError));
+    return this.http
+      .get<Sale>(url, { headers: this.getToken() })
+      .pipe(catchError(this.handleError));
   }
 
   // Adiciona uma compra
@@ -64,14 +81,19 @@ export class SaleService {
       {
         title: string;
         workload: number;
+        type: string;
+        area: string;
         price: number;
-        description: string;
       }
     ],
     value_paid: number
   ): Observable<Sale> {
     return this.http
-      .post<Sale>('http://localhost:3000/api/sales', { client, courses, value_paid }, this.httpOptions)
+      .post<Sale>(
+        'http://localhost:3000/api/sales',
+        { client, courses, value_paid },
+        this.httpOptions
+      )
       .pipe(catchError(this.handleError));
   }
 

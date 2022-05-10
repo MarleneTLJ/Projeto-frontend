@@ -16,7 +16,6 @@
             placeholder="Título"
             formControlName="title"
             name="title"
-            required
           />
           <mat-error>
             <div *ngIf="title.invalid">
@@ -40,7 +39,6 @@
             formControlName="workload"
             name="workload"
             type="number"
-            required
           />
           <mat-error>
             <div *ngIf="workload.invalid">
@@ -51,17 +49,53 @@
           </mat-error>
         </mat-form-field>
         <!-- FIM: Carga Horária -->
+        <!-- INÍCIO: Tipo -->
+        <mat-form-field>
+          <mat-label>Tipo</mat-label>
+          <input
+            matInput
+            placeholder="Tipo"
+            formControlName="type"
+            name="type"
+          />
+          <mat-error>
+            <div *ngIf="type.invalid">
+              <div *ngIf="type.errors?.['required']">Tipo é obrigatório</div>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <!-- FIM: Tipo -->
+        <!-- INÍCIO: Área -->
+        <mat-form-field>
+          <mat-label>Área</mat-label>
+          <input
+            matInput
+            placeholder="Área"
+            formControlName="area"
+            name="area"
+          />
+          <mat-error>
+            <div *ngIf="area.invalid">
+              <div *ngIf="area.errors?.['required']">Área é obrigatório</div>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <!-- FIM: Área -->
         <!-- INÍCIO: Preço -->
         <mat-form-field>
           <mat-label>Preço</mat-label>
           <input
             matInput
             currencyMask
-            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            [options]="{
+              prefix: 'R$ ',
+              thousands: '.',
+              decimal: ',',
+              align: 'left'
+            }"
             placeholder="Preço"
             formControlName="price"
             name="price"
-            required
           />
           <mat-error>
             <div *ngIf="price.invalid">
@@ -70,30 +104,9 @@
           </mat-error>
         </mat-form-field>
         <!-- FIM: Preço -->
-        <!-- INÍCIO: Descrição -->
-        <mat-form-field>
-          <mat-label>Descrição</mat-label>
-          <textarea
-            matInput
-            rows="8"
-            cols="30"
-            placeholder="Descrição"
-            formControlName="description"
-            name="description"
-            required
-          ></textarea>
-          <mat-error>
-            <div *ngIf="description.invalid">
-              <div *ngIf="description.errors?.['required']">
-                Descrição é obrigatório
-              </div>
-            </div>
-          </mat-error>
-        </mat-form-field>
-        <!-- FIM: Descrição -->
       </mat-card-content>
       <mat-card-actions>
-        <a class="spacing" mat-stroked-button (click)="goBack()">Voltar</a>
+        <a class="spacing" mat-button (click)="goBack()">Voltar</a>
         <button
           class="spacing"
           mat-flat-button

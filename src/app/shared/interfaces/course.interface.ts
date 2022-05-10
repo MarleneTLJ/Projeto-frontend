@@ -1,7 +1,8 @@
 export interface Course {
   _id: string;
-  title: string;
-  workload: number;
-  price: number;
-  description: string;
+  title: string,
+  workload: number,
+  type: string,
+  area: string,
+  price: number,
 }

@@ -20,16 +20,15 @@
     </div>
     <div class="cards">
       <mat-card class="mat-elevation-z0 outlined-card" *ngFor="let course of courses">
-        <mat-card-title>
-          {{ course.title }}
-        </mat-card-title>
-        <mat-card-subtitle>
-          Carga Horária: {{ course.workload }} horas
-        </mat-card-subtitle>
-        <mat-card-content>
-          <h2>R$ {{ course.price }}</h2>
-          <p>{{ course.description }}</p>
-        </mat-card-content>
+        <mat-card-title>{{ course.title }}</mat-card-title>
+          <mat-card-subtitle
+            >Carga Horária: {{ course.workload }} horas</mat-card-subtitle
+          >
+          <mat-card-content>
+            <p>{{ course.type }}</p>
+            <p>{{ course.area }}</p>
+            <h2>R$ {{ course.price }}</h2>
+          </mat-card-content>
       </mat-card>
     </div>
   </main>

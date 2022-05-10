@@ -9,16 +9,18 @@ import { Client } from '../interfaces';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TokenStorage } from 'src/app/shared/services/auth/token.storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
+  token: string | null = this.tokenStorage.getToken() || '';
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': this.token! }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -38,10 +40,18 @@ export class ClientService {
     );
   }
 
+  getToken() {
+    const token: string | null = this.tokenStorage.getToken() || '';
+    const headers = new HttpHeaders({
+      'auth-token': token
+    })
+    return headers;
+  }
+
   // Pega todos os clientes
   getClients(): Observable<Client[]> {
     return this.http
-      .get<Client[]>('http://localhost:3000/api/clients')
+      .get<Client[]>('http://localhost:3000/api/clients', { headers: this.getToken() })
       .pipe(catchError(this.handleError));
   }
 
@@ -49,7 +59,7 @@ export class ClientService {
   getClient(id: string): Observable<Client> {
     const url = `http://localhost:3000/api/clients/${id}`;
 
-    return this.http.get<Client>(url).pipe(catchError(this.handleError));
+    return this.http.get<Client>(url, { headers: this.getToken() }).pipe(catchError(this.handleError));
   }
 
   // Adiciona um cliente

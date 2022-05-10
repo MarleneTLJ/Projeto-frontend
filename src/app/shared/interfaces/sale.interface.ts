@@ -9,12 +9,22 @@ export interface Sale {
   courses: [
     {
       _id: string;
-      title: string;
-      workload: number;
-      price: number;
-      description: string;
+      title: string,
+      workload: number,
+      type: string,
+      area: string,
+      price: number,
     }
   ];
   value_paid: number,
+  thing: number,
+  user_logued: {
+    _id: string,
+    name: string,
+    roles: {
+      admin: boolean,
+      basic: boolean,
+    }
+  }
   createdAt: string,
 }

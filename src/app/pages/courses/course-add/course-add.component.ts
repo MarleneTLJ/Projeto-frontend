@@ -37,8 +37,9 @@ export class CourseAddComponent implements OnInit {
       Validators.maxLength(255),
     ]),
     workload: new FormControl('', [Validators.required]),
+    type: new FormControl('', [Validators.required]),
+    area: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
   });
 
   get title(): AbstractControl {
@@ -49,12 +50,16 @@ export class CourseAddComponent implements OnInit {
     return this.courseForm.get('workload')!;
   }
 
-  get price(): AbstractControl {
-    return this.courseForm.get('price')!;
+  get type(): AbstractControl {
+    return this.courseForm.get('type')!;
   }
 
-  get description(): AbstractControl {
-    return this.courseForm.get('description')!;
+  get area(): AbstractControl {
+    return this.courseForm.get('area')!;
+  }
+
+  get price(): AbstractControl {
+    return this.courseForm.get('price')!;
   }
 
   goBack(): void {
@@ -74,11 +79,11 @@ export class CourseAddComponent implements OnInit {
       return;
     }
 
-    const { title, workload, price, description } =
+    const { title, workload, type, area, price } =
       this.courseForm.getRawValue();
 
     this.courseService
-      .addCourse(title, workload, price, description)
+      .addCourse(title, workload, type, area, price)
       .subscribe({
         next: () => {
           this.openDialog();

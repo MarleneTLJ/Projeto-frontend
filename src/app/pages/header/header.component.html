@@ -23,13 +23,13 @@
       <mat-icon>account_circle</mat-icon> {{ user.name }}
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="/auth/register">
+      <button mat-menu-item routerLink="/auth/register" *ngIf="user.roles.admin === true">
         <mat-icon>person_add_alt_1</mat-icon>Cadastrar funcionário
       </button>
       <button mat-menu-item routerLink="/clients">
         <mat-icon>group</mat-icon>Clientes
       </button>
-      <button mat-menu-item routerLink="/courses">
+      <button mat-menu-item routerLink="/courses" *ngIf="user.roles.admin === true">
         <mat-icon>school</mat-icon>Cursos
       </button>
       <button mat-menu-item routerLink="/sales">

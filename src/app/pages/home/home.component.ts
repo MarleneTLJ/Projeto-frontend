@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogCompra } from '../../dialogs/dialog-compra/dialog-compra.component';
 
 import { Course } from 'src/app/shared/interfaces';
 import { CourseService } from '../../shared/services';
@@ -15,7 +13,7 @@ export class HomeComponent implements OnInit {
   courses: Course[] = [];
   error: string | null = null;
 
-  constructor(public dialog: MatDialog, private courseService: CourseService) {}
+  constructor(private courseService: CourseService) {}
 
   ngOnInit(): void {
     this.getCourses();
@@ -30,9 +28,4 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogCompra);
-
-    dialogRef.afterClosed().subscribe();
-  }
 }

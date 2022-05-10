@@ -71,8 +71,9 @@
             </mat-expansion-panel-header>
             <div>
               <p><strong>Carga Horária:</strong> {{ course.workload }}</p>
+              <p><strong>Tipo:</strong> {{ course.type }}</p>
+              <p><strong>Área:</strong> {{ course.area }}</p>
               <p><strong>Preço:</strong> R$ {{ course.price }}</p>
-              <p><strong>Descrição:</strong> {{ course.description }}</p>
             </div>
             <button mat-flat-button color="warn" (click)="remove(course)">
               Excluir

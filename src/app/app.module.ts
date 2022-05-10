@@ -13,7 +13,6 @@ import { AuthHeaderInterceptor } from './interceptors/header.interceptor';
 import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
-import { DialogCompra } from './dialogs/dialog-compra/dialog-compra.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -21,6 +20,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import {
   DialogInfoSucesso,
   DialogInfoConf,
+  DialogRotaInvalida
 } from './dialogs/dialog-info/dialog-info.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CourseDetailComponent } from './pages/courses/course-detail/course-detail.component';
@@ -59,9 +59,9 @@ const maskConfigFunction: () => Partial<IConfig> = () => {
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    DialogCompra,
     DialogInfoSucesso,
     DialogInfoConf,
+    DialogRotaInvalida,
     CoursesComponent,
     CourseDetailComponent,
     CourseAddComponent,

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './shared/guards';
+import { OnlyAdminUsersGuard } from './shared/guards/admin-user.guard';
 
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -29,22 +30,22 @@ const routes: Routes = [
   {
     path: 'auth/register',
     component: RegisterComponent,
-    canActivate: [AuthGuard]
+    canActivate: [OnlyAdminUsersGuard]
   },
   {
     path: 'courses',
     component: CoursesComponent,
-    canActivate: [AuthGuard]
+    canActivate: [OnlyAdminUsersGuard]
   },
   {
     path: 'course-detail/:id',
     component: CourseDetailComponent,
-    canActivate: [AuthGuard]
+    canActivate: [OnlyAdminUsersGuard]
   },
   {
     path: 'course-add',
     component: CourseAddComponent,
-    canActivate: [AuthGuard]
+    canActivate: [OnlyAdminUsersGuard]
   },
   {
     path: 'clients',

@@ -25,33 +25,53 @@
           />
         </mat-form-field>
         <mat-form-field>
+          <mat-label>Tipo</mat-label>
+          <input
+            matInput
+            placeholder="Tipo"
+            name="type"
+            [(ngModel)]="course.type"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Área</mat-label>
+          <input
+            matInput
+            placeholder="Área"
+            name="area"
+            [(ngModel)]="course.area"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Preço</mat-label>
           <input
             matInput
             currencyMask
-            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+            [options]="{
+              prefix: 'R$ ',
+              thousands: '.',
+              decimal: ',',
+              align: 'left'
+            }"
             placeholder="Preço"
             name="price"
             [(ngModel)]="course.price"
             required
           />
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Descrição</mat-label>
-          <textarea
-            matInput
-            rows="8"
-            cols="30"
-            placeholder="Descrição"
-            name="description"
-            [(ngModel)]="course.description"
-            required
-          ></textarea>
-        </mat-form-field>
       </mat-card-content>
       <mat-card-actions>
         <a class="spacing" mat-flat-button (click)="goBack()">Voltar</a>
-        <button class="spacing" mat-flat-button color="primary" (click)="saveCourse()">Salvar</button>
+        <button
+          class="spacing"
+          mat-flat-button
+          color="primary"
+          (click)="saveCourse()"
+        >
+          Salvar
+        </button>
       </mat-card-actions>
     </form>
   </mat-card>
